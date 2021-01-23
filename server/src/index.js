@@ -9,3 +9,31 @@ mongoose.connect(`mongodb://localhost:27017/stockApp`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+// Initialise app object
+const app = express();
+app.use(
+  session({
+    secret: "This is a random secret example",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+// This is the port your application will use
+const port = 3000;
+
+// Import all routers
+const internalRouter = require("./routes/internalRoutes");
+const userRouter = require("./routes/userRoutes");
+
+// Add middleware to be able to read and understand json files
+app.use(express.json());
+app.use(cors()); 
+
+// Tell express that it needs to use the routers we have initialised
+app.use("/internal", internalRouter);
+app.use("/users", userRouter);
+
+app.listen(port, () =>
+  console.log(`Stock app is listening at http://localhost:${port}`)
+);
