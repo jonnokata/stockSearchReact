@@ -2,7 +2,6 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/UserModel");
-const FavouritesModel = require("../models/FavouritesModel");
 
 // Create a new router to handle internal routes
 const router = express.Router();
@@ -68,12 +67,6 @@ router.get("/retrieve-session-value", (request, response) => {
     request.session.loggedIn = false;
     response.send("User has logged out!");
   });
-
-  // Favourite stock
-  router.post("/favourite", (request, response) => )
-
-  // Unfavourite stock
-
 
   // Update user info (e.g. update email)
 
