@@ -993,7 +993,7 @@ var stockSearch = function stockSearch() {
   };
 
   var findStockData = function findStockData(stockNameParam) {
-    var pendingStockData = $.ajax("/stocks/".concat(stockName)).then(function (stockData) {
+    var pendingStockData = $.ajax("/search/".concat(stockName)).then(function (stockData) {
       console.log("stockData", stockData);
       var stockSymbol = stockData["Meta Data"]["2. Symbol"]; // extract dates from api and create variables that can be used to chart
 

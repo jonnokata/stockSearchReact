@@ -26,6 +26,7 @@ const port = 3000;
 const internalRouter = require("./routes/internalRoutes");
 const userRouter = require("./routes/userRoutes");
 const favouritesRouter = require("./routes/favouritesRoutes");
+const stockRouter = require("./routes/stockRoutes");
 
 // Add middleware to be able to read and understand json files
 app.use(express.json());
@@ -35,6 +36,7 @@ app.use(cors());
 app.use("/internal", internalRouter);
 app.use("/api/users", userRouter);
 app.use("/favourites", favouritesRouter);
+app.use("/stocks", stockRouter);
 
 app.listen(port, () =>
   console.log(`Stock app is listening at http://localhost:${port}`)

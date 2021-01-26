@@ -40,7 +40,7 @@ const onSearchSubmit = (event) => {
 };
  
 const findStockData = (stockNameParam) => {
-  const pendingStockData = $.ajax(`/stocks/${stockName}`
+  const pendingStockData = $.ajax(`/search/${stockName}`
   ).then(stockData => {
     console.log("stockData", stockData);
     const stockSymbol = stockData["Meta Data"]["2. Symbol"];

@@ -14,18 +14,8 @@ const userSchema = mongoose.Schema({
     },
     email:  {
         type: String,
-        unique: [true, 'Email already exists. Please use another.'],
-        required: [true, 'Email is required.']
+        unique: [true, 'Email already exists. Please use another.']
     },
-    // favourites: {
-    //     type: String,
-    //     stockTicker: String,
-    //     stockPrice: String
-    // },
-    // favouritesId: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "favourites"
-    //   }
 });
 
 // Export model to use in userRoutes.js

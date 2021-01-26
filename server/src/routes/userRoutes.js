@@ -71,6 +71,13 @@ router.get("/retrieve-session-value", (request, response) => {
   // Update user info (e.g. update email)
 
 
-  // Delete user profile/account
+  // Delete user info
+  router.delete("/delete-user-info/:id", (request, response) => {
+    UserModel.findByIdAndDelete(request.session.user.id)
+    .then((data) => {
+      console.log("Delete successful!");
+      response.send(data);
+    });
+  });
 
   module.exports = router;
