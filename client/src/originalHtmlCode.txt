@@ -17,6 +17,33 @@
   ></script>
 </head>
 <body> 
+
+    <div class="container-fluid">
+        <div class="logo-container">
+            <a href="https://imgur.com/gEQ7SUO"><img src="https://i.imgur.com/gEQ7SUO.png" title="source: imgur.com" /></a>        
+        </div>
+
+
+        <div class="form-container">
+            <form class="form-inline" id="stock-form">
+                <label for="inlineFormInputGroupStockName"></label>
+                <input type="text" class="form-input" id="inlineFormInputGroupStockName" name="stock" placeholder="&#128269 Search for stock"></input>
+                <input type="submit" class="btn-primary" id="stock-search-submit" value="Search" data-bs-toggle="button" autocomplete="off"></input>
+            </form>
+        </div>
+
+        <div class="company-and-price-container">
+            <p id="symbol-and-name"></p>
+            <p id="price"></p>
+        </div>
+
+        <div class="chart-wrapper">
+            <canvas id="stockChart"></canvas>
+        </div>
+
+    </div>
+
+
     <script
         src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
