@@ -68,11 +68,9 @@ router.get("/retrieve-session-value", (request, response) => {
     response.send("User has logged out!");
   });
 
-  // Update user info (e.g. update email)
-
 
   // Delete user info
-  router.delete("/delete-user-info/:id", (request, response) => {
+  router.delete("/delete-user-info", (request, response) => {
     UserModel.findByIdAndDelete(request.session.user.id)
     .then((data) => {
       console.log("Delete successful!");

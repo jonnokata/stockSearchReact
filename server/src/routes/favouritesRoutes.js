@@ -46,22 +46,23 @@ router.get("/all", (req, res) => {
 });
 
 
-// --------------------------------------------------------
+// --------------------------------------------------
 
-// Find if a user has favourited a specific stock
-router.get("/favourite-check/:symbol", (req, res) => {
-  FavouritesModel.find({ userId: req.session.user.id, stockSymbol: req.params.symbol }).then((data) => {
-    res.send(data);
+// use findOne to check if a stock has already been favourited. HOW DO YOU USE DATA FROM UI AND PARSE INTO :symbol?
+router.get("/check/:symbol", (req, res) => {
+  FavouritesModel.findOne({stockSymbol: req.params.symbol, userId: req.session.user.id})
+  .then((data) => {
+    res.send(data ?true:false);
   });
 });
 
 
 // --------------------------------------------------------
 
-// Remove favourite stock from favourites list
+// Remove favourite stock from favourites list. 
 
-router.delete("delete-favourite/:symbol", (request, response) => {
-  FavouritesModel.findByIdAndRemove({ userId: request.session.user.id, stockSymbol: request.params.symbol})
+router.delete("delete/:symbol", (request, response) => {
+  FavouritesModel.findByIdAndDelete({ userId: request.session.user.id, stockSymbol: request.params.symbol})
   .then((data) => {
     console.log("Unfavourite successful!");
     response.send(data);
@@ -73,8 +74,6 @@ router.delete("delete-favourite/:symbol", (request, response) => {
 });
 
 // --------------------------------------------------------
-
-// use findOne to check if a stock has already been favourited.
 
 
 
