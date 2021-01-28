@@ -44,6 +44,12 @@ const findStockData = (stockNameParam) => {
   ).then(stockData => {
     console.log("stockData", stockData);
     const stockSymbol = stockData["Meta Data"]["2. Symbol"];
+
+    $.ajax(`/check/${stockSymbol}`)
+    .then(isFavourite => {
+      if (isFavourite) {$("body").append("this works")} 
+      // add in logic for adding favourites button
+    });  
     
     // extract dates from api and create variables that can be used to chart
 
