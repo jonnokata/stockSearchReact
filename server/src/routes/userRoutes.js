@@ -28,7 +28,7 @@ router.get("/retrieve-session-value", (request, response) => {
     const passwordHash = bcrypt.hashSync(body.password, 10);
     console.log('passwordHash:', passwordHash);
   
-    const user = {username: body.username, password: passwordHash, email: body.email};
+    const user = {username: body.username, password: passwordHash};
     console.log('user:', user);
   
     UserModel.create(user).then((userData) => {

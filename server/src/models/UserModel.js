@@ -11,11 +11,7 @@ const userSchema = mongoose.Schema({
         type: String,
         min: [6, 'Password must be at least 6 characters.'],
         required: [true, 'Password is required.']
-    },
-    email:  {
-        type: String,
-        unique: [true, 'Email already exists. Please use another.']
-    },
+    }
 });
 
 // Export model to use in userRoutes.js

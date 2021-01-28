@@ -35,8 +35,8 @@ app.use(cors());
 // Tell express that it needs to use the routers we have initialised
 app.use("/internal", internalRouter);
 app.use("/api/users", userRouter);
-app.use("/favourites", favouritesRouter);
-app.use("/stocks", stockRouter);
+app.use("/api/favourites", favouritesRouter);
+app.use("/api/stocks", stockRouter);
 
 app.listen(port, () =>
   console.log(`Stock app is listening at http://localhost:${port}`)

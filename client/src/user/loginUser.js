@@ -1,9 +1,9 @@
 import newUser from "./newUser";
 import stockSearch from "../stockSearch";
 
-const form = () => html `
+const form = `
   <form id="login-user">
-  <h1>Login to the fruits App</h1>
+  <h1>Login to Stock Buddy</h1>
     <div class="form-group">
       <label for="username">Username</label>
       <input type="text" class="form-control" placeholder="Please enter username" name="username">
@@ -25,7 +25,6 @@ const loginUser = () => {
     const formData = {
       username: $("input[name='username']").val(),
       password: $("input[name='password']").val(),
-      email: $("input(name='email']").val(),
     };
 
     // Make a call to validate user name and password

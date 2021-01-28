@@ -1,6 +1,7 @@
 import loginUser from "./loginUser";
 
-const form = () => html `
+
+const form = `
   <form id="new-user">
   <h1>New user registration form</h1>
     <div class="form-group">
@@ -10,10 +11,6 @@ const form = () => html `
     <div class="form-group">
       <label for="password">Password</label>
       <input type="password" class="form-control" placeholder="Please enter password" name="password">
-    </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="text" class="form-control" placeholder="Please enter email" name="email">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
@@ -27,7 +24,6 @@ const newUser = () => {
     const formData = {
       username: $("input[name='username']").val(),
       password: $("input[name='password']").val(),
-      email: $("input[name='username']").val(),
     };
 
     try {

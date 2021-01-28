@@ -1,17 +1,19 @@
-const searchForm = () => html `
+import { eventNames } from "../../server/src/models/UserModel";
+
+const searchForm = `
     <div class="container-fluid">
         <div class="logo-container">
             <a href="https://imgur.com/gEQ7SUO"><img src="https://i.imgur.com/gEQ7SUO.png" title="source: imgur.com" /></a>        
         </div>
 
-
-        <div class="form-container">
-            <form class="form-inline" id="stock-form">
+        <form class="form-container">
+            <div class="form-inline" id="stock-form">
                 <label for="inlineFormInputGroupStockName"></label>
                 <input type="text" class="form-input" id="inlineFormInputGroupStockName" name="stock" placeholder="&#128269 Search for stock"></input>
-                <input type="submit" class="btn-primary" id="stock-search-submit" value="Search" data-bs-toggle="button" autocomplete="off"></input>
-            </form>
-        </div>
+                <!-- <input type="submit" class="btn-primary" id="stock-search-submit" value="Search" data-bs-toggle="button" autocomplete="off"></input> -->
+                <button  type="button" id="search-submit"  class="btn btn-primary">Search</button>
+            </div>
+        </form>
 
         <div class="company-and-price-container">
             <div id="symbol-and-name"></div>
@@ -25,12 +27,12 @@ const searchForm = () => html `
 
     </div>
 `;
- 
+
 const stockSearch = () => {
 // Use name to find and extract symbol from search input
 const onSearchSubmit = (event) => {
   event.preventDefault();
-  console.log('event', event);
+  // console.log('event', event);
   const $stockSearch = $('input[name="stock"]');
   console.log("stockSearch", $stockSearch);
   const stockName = $stockSearch.val();
@@ -38,22 +40,22 @@ const onSearchSubmit = (event) => {
 
   return findStockData(stockName);
 };
- 
+
 const findStockData = (stockNameParam) => {
-  const pendingStockData = $.ajax(`/search/${stockName}`
+  const pendingStockData = $.ajax(`api/stocks/search/${stockNameParam}`
   ).then(stockData => {
     console.log("stockData", stockData);
     const stockSymbol = stockData["Meta Data"]["2. Symbol"];
 
-    $.ajax(`/check/${stockSymbol}`)
-    .then(isFavourite => {
-      if (isFavourite) {$("body").append("this works")} 
-      // add in logic for adding favourites button
-    });  
+    // $.ajax(`api/stocks/check/${stockSymbol}`)
+    // .then(isFavourite => {
+    //   if (isFavourite) {$("body").append("this works")} 
+    //   // add in logic for adding favourites button
+    // });  
     
     // extract dates from api and create variables that can be used to chart
 
-    dateData = Object.keys(stockData['Time Series (Daily)']);
+    let dateData = Object.keys(stockData['Time Series (Daily)']);
     const dateDataToday = dateData[0];
     const dateDataTodayMinus1 = dateData[1];
     const dateDataTodayMinus2 = dateData[2];
@@ -115,7 +117,19 @@ const findStockData = (stockNameParam) => {
 
 };
 
-$("#stock-form").on("submit", onSearchSubmit);
+
+// $("#search-submit").on("click", onSearchSubmit);
+
+// $("#stock-form").on("submit", function (e) 
+// {e.preventDefault();
+//   console.log("submit test")});
+
+$(document).on("click", "#search-submit", (e) => { 
+  e.preventDefault();
+  onSearchSubmit(e);
+  console.log("Stock button clicked!");
+  // take symbol and send to backend. Backend to store as favourite.
+});
 
 $(document).on("click", "#save-favourite", (e) => { 
   e.preventDefault();
