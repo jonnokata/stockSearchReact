@@ -1,6 +1,7 @@
 // import express
 const express = require("express");
 const StockModel = require("../models/StockModel");
+const FavouritesModel = require("../models/FavouritesModel");
 const fetch = require('node-fetch');
 
 // Create a new router to handle favourites routes
@@ -30,8 +31,15 @@ router.get("/search/:name", async (request, response) => {
       // getting price for stonk
     const priceQueryResponse = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${stockSymbolConst}&apikey=EU18KIHPYJ49OM7D`)
     const stockPriceData = await priceQueryResponse.json();
+
+    const stockData = {
+      stockName: stockNameConst,
+      stockSymbol: stockSymbolConst,
+      stockPrice: stockPriceData,
+      userId: request.session.user.id
+    };
   
-    response.send(stockPriceData);
+    response.send(stockData);
   });
 
   module.exports = router;

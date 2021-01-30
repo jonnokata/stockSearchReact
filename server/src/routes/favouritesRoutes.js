@@ -1,5 +1,7 @@
 const express = require("express");
 const FavouritesModel = require("../models/FavouritesModel");
+const StockModel = require("../models/StockModel");
+const fetch = require('node-fetch');
 
 // Create a new router to handle favourites routes
 const router = express.Router();
@@ -18,17 +20,16 @@ router.use((request, response, next) => {
 
 //Add favourite stock to favourites list
 router.post("/new-favourite", (request, response) => {
-    const requestBody = request.body;
-
+    const favouriteDataRequest = request.body;
+  console.log("favouriteDataRequest", favouriteDataRequest);
     // stock name, stock symbol from your ui 
-    const requestToDatabase = { 
-      stockSymbol: request.body.stockSymbol,
-      stockName: request.body.stockName,
-      userId: request.session.user.id 
-    };
-
-// Parse data from UI (stockNameConst & stockSymbolConst). How do I make requestBody not include lastClosePrice?
-FavouritesModel.create(requestToDatabase).then((data) => {
+    // const requestToDatabase = { 
+    //   stockSymbol: responseBody.stockSymbol,
+    //   stockName: responseBody.stockName,
+    //   userId: responseBody.userId
+    // };
+//Parse data from UI (stockNameConst & stockSymbolConst). How do I make requestBody not include lastClosePrice?
+FavouritesModel.create(favouriteDataRequest).then((data) => {
     console.log(data);
     response.send(data);
   });

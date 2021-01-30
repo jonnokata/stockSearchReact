@@ -25,8 +25,28 @@ const searchForm = `
             <canvas id="stockChart"></canvas>
         </div>
 
+        <div class="company-and-price-container">
+          <div id="symbol-and-name-favourite"></div>
+          <div id="test-div"></div>
+          <p id="price-favourite"></p>
+      </div>
+
     </div>
 `;
+
+let favouritesList = {
+  stockSymbol,
+  stockName
+};
+
+// call to get list of all favourites
+const $.ajax('')
+.then(allFavs => {
+  favouritesList = allFavs;
+
+  // rendering all favourites
+});
+
 
 const stockSearch = () => {
 // Use name to find and extract symbol from search input
@@ -45,7 +65,38 @@ const findStockData = (stockNameParam) => {
   const pendingStockData = $.ajax(`api/stocks/search/${stockNameParam}`
   ).then(stockData => {
     console.log("stockData", stockData);
-    const stockSymbol = stockData["Meta Data"]["2. Symbol"];
+    const stockSymbol = stockData.stockSymbol;
+    const stockName = stockData.stockName;
+    const userId = stockData.userId;
+
+     // Checking if the stock is already favourited
+     const isAlreadyFavourited = favouritesList.includes(stockSymbol);
+
+     // create favourite button
+       const favouriteButton =  `<button type="button" class="btn-primary" id="save-favourite">${isAlreadyFavourited ? 'Unfavourite' : 'Favourite'}</button>`
+
+    $(document).on("click", "#save-favourite", async (e) => { 
+        e.preventDefault();
+        console.log("Fav button clicked!");
+      
+        const favouriteDataRequest = {
+          stockSymbol: stockSymbol,
+          stockName: stockName,
+          userId: userId
+        };
+
+        console.log("favouriteDataRequest", favouriteDataRequest);
+        if (isAlreadyFavourited) {add delete in here} else {
+          const favouriteDataResponse = await $.ajax ({
+          type: "POST",
+          url: "/api/favourites/new-favourite",
+          contentType: "application/json",
+          data: JSON.stringify(favouriteDataRequest),}
+      });
+
+        window.alert("Favourite added!");
+      
+      });
 
     // $.ajax(`api/stocks/check/${stockSymbol}`)
     // .then(isFavourite => {
@@ -55,7 +106,7 @@ const findStockData = (stockNameParam) => {
     
     // extract dates from api and create variables that can be used to chart
 
-    let dateData = Object.keys(stockData['Time Series (Daily)']);
+    let dateData = Object.keys(stockData.stockPrice['Time Series (Daily)']);
     const dateDataToday = dateData[0];
     const dateDataTodayMinus1 = dateData[1];
     const dateDataTodayMinus2 = dateData[2];
@@ -64,7 +115,7 @@ const findStockData = (stockNameParam) => {
     console.log("dateData", dateData);
 
     // turn object into array so that prices can be accessed from returned api results
-    const timeSeriesValues = Object.values(stockData['Time Series (Daily)']);
+    const timeSeriesValues = Object.values(stockData.stockPrice['Time Series (Daily)']);
     console.log(timeSeriesValues);
 
     // extract prices and and create variables that can be used to chart
@@ -76,12 +127,11 @@ const findStockData = (stockNameParam) => {
     console.log(lastClose);
     console.log(lastCloseMinus4);
 
-  // create favourite button
-    const favouriteButton =  `<button type="button" class="btn-primary" id="save-favourite">Favourite</button>`
+   
 
     // append stock info and favourite button to body on search
     $("#symbol-and-name").empty();
-    $("#symbol-and-name").append(`${stockSymbol} | ${stockNameParam} ${favouriteButton}`);
+    $("#symbol-and-name").append(`${stockSymbol} | ${stockName} ${favouriteButton}`);
     $("#price").empty();
     $("#price").append(`${lastClose}`);
 
@@ -116,6 +166,7 @@ const findStockData = (stockNameParam) => {
 
 
 };
+console.log("find stock data", findStockData);
 
 
 // $("#search-submit").on("click", onSearchSubmit);
@@ -128,17 +179,45 @@ $(document).on("click", "#search-submit", (e) => {
   e.preventDefault();
   onSearchSubmit(e);
   console.log("Stock button clicked!");
-  // take symbol and send to backend. Backend to store as favourite.
 });
 
-$(document).on("click", "#save-favourite", (e) => { 
-  e.preventDefault();
-  console.log("Fav button clicked!");
-  // take symbol and send to backend. Backend to store as favourite.
-});
+
+
+// $(document).on("click", "#save-favourite", async (e) => { 
+//   e.preventDefault();
+//   console.log("Fav button clicked!");
+
+//   const favouriteDataRequest = {
+//     stockSymbol: stockSymbol,
+//     stockName: stockNameParam
+    
+//     // $("#symbol-and-name").empty();
+//     // $("#symbol-and-name").append(`${stockSymbol} | ${stockNameParam} ${favouriteButton}`);
+//     // $("#price").empty();
+//     // $("#price").append(`${lastClose}`);
+//   }
+
+//   const favouriteDataResponse = await $.ajax ({
+//     type: "POST",
+//     url: "/favourites/new-favourite",
+//     contentType: "application/json",
+//     data: JSON.stringify(requestBody),
+// });
+
+//   window.alert("Favourite added!");
+
+// });
 
 return searchForm;
 
-};
+}; 
 
 export default stockSearch;
+
+// Step 1:
+// const favouritesList = ajax call to lookup all favourites for user {
+//   store all favourites for user
+// }
+
+// Step 2: find unfavourited
+// 
