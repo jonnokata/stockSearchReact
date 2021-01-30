@@ -62,12 +62,12 @@ const findFavouriteSymbol = (symbol) => {
 const favouriteButton = (symbol) => {
   const favourite = findFavouriteSymbol(symbol);
   if (!symbol) {
-    return `<button type="button" class="btn-primary" id="save-favourite">'Favourite'</button>`;
+    return `<button type="button" class="btn-primary" id="save-favourite">Favourite</button>`;
   }
   if (favourite) {
     return `<button type="button" class="btn-primary" id="save-favourite">Unfavourite</button>`;
   } else {
-    return `<button type="button" class="btn-primary" id="save-favourite">'Favourite'</button>`;
+    return `<button type="button" class="btn-primary" id="save-favourite">Favourite</button>`;
   }
 };
 
@@ -109,7 +109,7 @@ const stockSearch = () => {
           if (favouriteDataResponse === "Favourite deleted!") {
             $("#symbol-and-name").empty();
             $("#symbol-and-name").append(
-              `${stockSymbol} | ${stockName} ${favouriteButton(
+              `${stockSymbol} | ${stockName} ${favouriteButton}`
             );
           }
           loadFavourites();
@@ -146,7 +146,7 @@ const stockSearch = () => {
         $("#symbol-and-name").empty();
         // $("#symbol-and-name").append(`${stockSymbol} | ${stockName}`);
         $("#symbol-and-name").append(
-          `${stockSymbol} | ${stockName} ${favouriteButton(stockSymbol)}}`
+          `${stockSymbol} | ${stockName} ${favouriteButton(stockSymbol)}`
         );
         $("#price").empty();
         $("#price").append(`${lastClose}`);
@@ -205,31 +205,12 @@ const stockSearch = () => {
 
     findStockData(stockName);
   };
-  // $("#search-submit").on("click", onSearchSubmit);
-
-  // $("#stock-form").on("submit", function (e)
-  // {e.preventDefault();
-  //   console.log("submit test")});
 
   $(document).on("submit", "#stock-form", (e) => {
     e.preventDefault();
     onSearchSubmit(e);
     console.log("Stock button clicked!");
   });
-
-  // $(document).on("click", "#save-favourite", async (e) => {
-  //   e.preventDefault();
-  //   console.log("Fav button clicked!");
-
-  //   const favouriteDataRequest = {
-  //     stockSymbol: stockSymbol,
-  //     stockName: stockNameParam
-
-  //     // $("#symbol-and-name").empty();
-  //     // $("#symbol-and-name").append(`${stockSymbol} | ${stockNameParam} ${favouriteButton}`);
-  //     // $("#price").empty();
-  //     // $("#price").append(`${lastClose}`);
-  //   }
 
   //   const favouriteDataResponse = await $.ajax ({
   //     type: "POST",
@@ -246,15 +227,3 @@ const stockSearch = () => {
 };
 
 export default stockSearch;
-
-// Step 1:
-// const favouritesList = ajax call to lookup all favourites for user {
-//   store all favourites for user
-// }
-
-// Step 2: find unfavourited
-
-// console.log("favouriteDataRequest", favouriteDataRequest);
-// if (isAlreadyFavourited)
-// {}
-// else {

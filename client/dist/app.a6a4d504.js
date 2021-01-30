@@ -22794,13 +22794,13 @@ var favouriteButton = function favouriteButton(symbol) {
   var favourite = findFavouriteSymbol(symbol);
 
   if (!symbol) {
-    return "<button type=\"button\" class=\"btn-primary\" id=\"save-favourite\">'Favourite'</button>";
+    return "<button type=\"button\" class=\"btn-primary\" id=\"save-favourite\">Favourite</button>";
   }
 
   if (favourite) {
     return "<button type=\"button\" class=\"btn-primary\" id=\"save-favourite\">Unfavourite</button>";
   } else {
-    return "<button type=\"button\" class=\"btn-primary\" id=\"save-favourite\">'Favourite'</button>";
+    return "<button type=\"button\" class=\"btn-primary\" id=\"save-favourite\">Favourite</button>";
   }
 };
 
@@ -22846,7 +22846,7 @@ var stockSearch = function stockSearch() {
 
                   if (favouriteDataResponse === "Favourite deleted!") {
                     $("#symbol-and-name").empty();
-                    $("#symbol-and-name").append("".concat(stockSymbol, " | ").concat(stockName, " ").concat(favouriteButton(), "}"));
+                    $("#symbol-and-name").append("".concat(stockSymbol, " | ").concat(stockName, " ").concat(favouriteButton));
                   }
 
                   loadFavourites();
@@ -22886,7 +22886,7 @@ var stockSearch = function stockSearch() {
 
       $("#symbol-and-name").empty(); // $("#symbol-and-name").append(`${stockSymbol} | ${stockName}`);
 
-      $("#symbol-and-name").append("".concat(stockSymbol, " | ").concat(stockName, " ").concat(favouriteButton(stockSymbol), "}"));
+      $("#symbol-and-name").append("".concat(stockSymbol, " | ").concat(stockName, " ").concat(favouriteButton(stockSymbol)));
       $("#price").empty();
       $("#price").append("".concat(lastClose)); // create chart
 
@@ -22923,28 +22923,13 @@ var stockSearch = function stockSearch() {
     var stockName = $stockSearch.val();
     console.log(stockName);
     findStockData(stockName);
-  }; // $("#search-submit").on("click", onSearchSubmit);
-  // $("#stock-form").on("submit", function (e)
-  // {e.preventDefault();
-  //   console.log("submit test")});
-
+  };
 
   $(document).on("submit", "#stock-form", function (e) {
     e.preventDefault();
     onSearchSubmit(e);
     console.log("Stock button clicked!");
-  }); // $(document).on("click", "#save-favourite", async (e) => {
-  //   e.preventDefault();
-  //   console.log("Fav button clicked!");
-  //   const favouriteDataRequest = {
-  //     stockSymbol: stockSymbol,
-  //     stockName: stockNameParam
-  //     // $("#symbol-and-name").empty();
-  //     // $("#symbol-and-name").append(`${stockSymbol} | ${stockNameParam} ${favouriteButton}`);
-  //     // $("#price").empty();
-  //     // $("#price").append(`${lastClose}`);
-  //   }
-  //   const favouriteDataResponse = await $.ajax ({
+  }); //   const favouriteDataResponse = await $.ajax ({
   //     type: "POST",
   //     url: "/favourites/new-favourite",
   //     contentType: "application/json",
@@ -22956,16 +22941,7 @@ var stockSearch = function stockSearch() {
   return searchForm;
 };
 
-var _default = stockSearch; // Step 1:
-// const favouritesList = ajax call to lookup all favourites for user {
-//   store all favourites for user
-// }
-// Step 2: find unfavourited
-// console.log("favouriteDataRequest", favouriteDataRequest);
-// if (isAlreadyFavourited)
-// {}
-// else {
-
+var _default = stockSearch;
 exports.default = _default;
 },{"../../server/src/models/UserModel":"../server/src/models/UserModel.js"}],"src/user/loginUser.js":[function(require,module,exports) {
 "use strict";
@@ -23088,7 +23064,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51664" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61994" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

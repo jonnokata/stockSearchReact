@@ -21,13 +21,7 @@ router.use((request, response, next) => {
 router.post("/new-favourite", (request, response) => {
   const favouriteDataRequest = request.body;
   console.log("favouriteDataRequest", favouriteDataRequest);
-  // stock name, stock symbol from your ui
-  // const requestToDatabase = {
-  //   stockSymbol: responseBody.stockSymbol,
-  //   stockName: responseBody.stockName,
-  //   userId: responseBody.userId
-  // };
-  //Parse data from UI (stockNameConst & stockSymbolConst). How do I make requestBody not include lastClosePrice?
+
   FavouritesModel.find({ stockSymbol: request.body.stockSymbol }).then(
     (favourite) => {
       console.log("favourite", favourite);

@@ -1,6 +1,5 @@
 import loginUser from "./loginUser";
 
-
 const form = `
   <form id="new-user">
   <h1>New user registration form</h1>
