@@ -1,4 +1,5 @@
 import { eventNames } from "../../server/src/models/UserModel";
+import updateUser from "./user/updateUser";
 
 const searchForm = `
     <div class="container-fluid">
@@ -12,6 +13,7 @@ const searchForm = `
                 <input type="text" class="form-input" id="inlineFormInputGroupStockName" name="stock" placeholder="&#128269 Search for stock"></input>
                 <!-- <input type="submit" class="btn-primary" id="stock-search-submit" value="Search" data-bs-toggle="button" autocomplete="off"></input> -->
                 <button  type="submit" id="search-submit"  class="btn btn-primary">Search</button>
+                <button type="button" id="update-user" class="btn btn-primary">Update profile</button>
             </div>
         </form>
 
@@ -222,6 +224,14 @@ const stockSearch = () => {
   //   window.alert("Favourite added!");
 
   // });
+
+  $(document).on("click", "#update-user", () => {
+    // Clear current login form
+    $("body").empty();
+
+    // Append update user form
+    $("body").append(updateUser());
+  });
 
   return searchForm;
 };

@@ -22746,7 +22746,88 @@ var userSchema = mongoose.Schema({
 }); // Export model to use in userRoutes.js
 
 module.exports = mongoose.model("users", userSchema);
-},{"mongoose":"../server/node_modules/mongoose/dist/browser.umd.js"}],"src/stockSearch.js":[function(require,module,exports) {
+},{"mongoose":"../server/node_modules/mongoose/dist/browser.umd.js"}],"src/user/updateUser.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _newUser = _interopRequireDefault(require("./newUser"));
+
+var _loginUser = _interopRequireDefault(require("./loginUser"));
+
+var _stockSearch = _interopRequireDefault(require("../stockSearch"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var form = "\n  <form id=\"update-user-details\">\n  <h1>Update your profile details</h1>\n    <div class=\"form-group\">\n      <label for=\"username\">Username</label>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Please enter your new username\" name=\"username\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" placeholder=\"Please enter your new assword\" name=\"password\">\n    </div>\n    <button type=\"submit\" id=\"update-user-info\" class=\"btn btn-primary\">Submit</button>\n  </form>\n";
+
+var updateUser = function updateUser() {
+  $(document).on("submit", "#update-user-details", /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
+      var formData, response;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              event.preventDefault(); // Extract username and password entered
+
+              formData = {
+                username: $("input[name='username']").val(),
+                password: $("input[name='password']").val()
+              }; // Make a call to validate user name and password
+
+              _context.prev = 2;
+              _context.next = 5;
+              return $.ajax({
+                type: "PATCH",
+                url: "/api/users/update-user",
+                contentType: "application/json",
+                data: JSON.stringify(formData)
+              });
+
+            case 5:
+              response = _context.sent;
+              console.log("this worked"); // Clear current login form as login is successful by calling empty() function
+
+              $("body").empty(); // Append the stock search to the body allowing the user to create/update/delete fruits
+
+              $("body").append((0, _stockSearch.default)());
+              window.alert("Your details have been updated!");
+              _context.next = 16;
+              break;
+
+            case 12:
+              _context.prev = 12;
+              _context.t0 = _context["catch"](2);
+              // If there's a problem updating the details in, then add a message to let user know that an invalid combination was provided
+              $("body").append("<div>Invalid user/pass provided!</div>");
+              console.log("this didn't worked");
+
+            case 16:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[2, 12]]);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+  return form;
+};
+
+var _default = updateUser;
+exports.default = _default;
+},{"./newUser":"src/user/newUser.js","./loginUser":"src/user/loginUser.js","../stockSearch":"src/stockSearch.js"}],"src/stockSearch.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22756,11 +22837,15 @@ exports.default = void 0;
 
 var _UserModel = require("../../server/src/models/UserModel");
 
+var _updateUser = _interopRequireDefault(require("./user/updateUser"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var searchForm = "\n    <div class=\"container-fluid\">\n        <div class=\"logo-container\">\n            <a href=\"https://imgur.com/gEQ7SUO\"><img src=\"https://i.imgur.com/gEQ7SUO.png\" title=\"source: imgur.com\" /></a>        \n        </div>\n\n        <form class=\"form-container\" id=\"stock-form\">\n            <div class=\"form-inline\">\n                <label for=\"inlineFormInputGroupStockName\"></label>\n                <input type=\"text\" class=\"form-input\" id=\"inlineFormInputGroupStockName\" name=\"stock\" placeholder=\"&#128269 Search for stock\"></input>\n                <!-- <input type=\"submit\" class=\"btn-primary\" id=\"stock-search-submit\" value=\"Search\" data-bs-toggle=\"button\" autocomplete=\"off\"></input> -->\n                <button  type=\"submit\" id=\"search-submit\"  class=\"btn btn-primary\">Search</button>\n            </div>\n        </form>\n\n        <div class=\"company-and-price-container\">\n            <div id=\"symbol-and-name\"></div>\n            <div id=\"test-div\"></div>\n            <p id=\"price\"></p>\n        </div>\n\n        <div class=\"chart-wrapper\">\n            <canvas id=\"stockChart\"></canvas>\n        </div>\n\n        <div id=\"favourites-container\">\n        </div>\n\n    </div>\n"; // top level variable to store favourites data on page load
+var searchForm = "\n    <div class=\"container-fluid\">\n        <div class=\"logo-container\">\n            <a href=\"https://imgur.com/gEQ7SUO\"><img src=\"https://i.imgur.com/gEQ7SUO.png\" title=\"source: imgur.com\" /></a>        \n        </div>\n\n        <form class=\"form-container\" id=\"stock-form\">\n            <div class=\"form-inline\">\n                <label for=\"inlineFormInputGroupStockName\"></label>\n                <input type=\"text\" class=\"form-input\" id=\"inlineFormInputGroupStockName\" name=\"stock\" placeholder=\"&#128269 Search for stock\"></input>\n                <!-- <input type=\"submit\" class=\"btn-primary\" id=\"stock-search-submit\" value=\"Search\" data-bs-toggle=\"button\" autocomplete=\"off\"></input> -->\n                <button  type=\"submit\" id=\"search-submit\"  class=\"btn btn-primary\">Search</button>\n                <button type=\"button\" id=\"update-user\" class=\"btn btn-primary\">Update profile</button>\n            </div>\n        </form>\n\n        <div class=\"company-and-price-container\">\n            <div id=\"symbol-and-name\"></div>\n            <div id=\"test-div\"></div>\n            <p id=\"price\"></p>\n        </div>\n\n        <div class=\"chart-wrapper\">\n            <canvas id=\"stockChart\"></canvas>\n        </div>\n\n        <div id=\"favourites-container\">\n        </div>\n\n    </div>\n"; // top level variable to store favourites data on page load
 
 var favouritesList;
 
@@ -22938,12 +23023,18 @@ var stockSearch = function stockSearch() {
   //   window.alert("Favourite added!");
   // });
 
+  $(document).on("click", "#update-user", function () {
+    // Clear current login form
+    $("body").empty(); // Append update user form
+
+    $("body").append((0, _updateUser.default)());
+  });
   return searchForm;
 };
 
 var _default = stockSearch;
 exports.default = _default;
-},{"../../server/src/models/UserModel":"../server/src/models/UserModel.js"}],"src/user/loginUser.js":[function(require,module,exports) {
+},{"../../server/src/models/UserModel":"../server/src/models/UserModel.js","./user/updateUser":"src/user/updateUser.js"}],"src/user/loginUser.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -23064,7 +23155,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61994" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62096" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
