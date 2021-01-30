@@ -22760,25 +22760,52 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var searchForm = "\n    <div class=\"container-fluid\">\n        <div class=\"logo-container\">\n            <a href=\"https://imgur.com/gEQ7SUO\"><img src=\"https://i.imgur.com/gEQ7SUO.png\" title=\"source: imgur.com\" /></a>        \n        </div>\n\n        <form class=\"form-container\">\n            <div class=\"form-inline\" id=\"stock-form\">\n                <label for=\"inlineFormInputGroupStockName\"></label>\n                <input type=\"text\" class=\"form-input\" id=\"inlineFormInputGroupStockName\" name=\"stock\" placeholder=\"&#128269 Search for stock\"></input>\n                <!-- <input type=\"submit\" class=\"btn-primary\" id=\"stock-search-submit\" value=\"Search\" data-bs-toggle=\"button\" autocomplete=\"off\"></input> -->\n                <button  type=\"button\" id=\"search-submit\"  class=\"btn btn-primary\">Search</button>\n            </div>\n        </form>\n\n        <div class=\"company-and-price-container\">\n            <div id=\"symbol-and-name\"></div>\n            <div id=\"test-div\"></div>\n            <p id=\"price\"></p>\n        </div>\n\n        <div class=\"chart-wrapper\">\n            <canvas id=\"stockChart\"></canvas>\n        </div>\n\n        <div class=\"company-and-price-container\">\n          <div id=\"symbol-and-name-favourite\"></div>\n          <div id=\"test-div\"></div>\n          <p id=\"price-favourite\"></p>\n      </div>\n\n    </div>\n";
-var favouritesList = ['IBM']; // // call to get list of all favourites
-// $.ajax('')
-// .then(allFavs => {
-//   favouritesList = allFavs;
-//   // rendering all favourites
-// });
+var searchForm = "\n    <div class=\"container-fluid\">\n        <div class=\"logo-container\">\n            <a href=\"https://imgur.com/gEQ7SUO\"><img src=\"https://i.imgur.com/gEQ7SUO.png\" title=\"source: imgur.com\" /></a>        \n        </div>\n\n        <form class=\"form-container\" id=\"stock-form\">\n            <div class=\"form-inline\">\n                <label for=\"inlineFormInputGroupStockName\"></label>\n                <input type=\"text\" class=\"form-input\" id=\"inlineFormInputGroupStockName\" name=\"stock\" placeholder=\"&#128269 Search for stock\"></input>\n                <!-- <input type=\"submit\" class=\"btn-primary\" id=\"stock-search-submit\" value=\"Search\" data-bs-toggle=\"button\" autocomplete=\"off\"></input> -->\n                <button  type=\"submit\" id=\"search-submit\"  class=\"btn btn-primary\">Search</button>\n            </div>\n        </form>\n\n        <div class=\"company-and-price-container\">\n            <div id=\"symbol-and-name\"></div>\n            <div id=\"test-div\"></div>\n            <p id=\"price\"></p>\n        </div>\n\n        <div class=\"chart-wrapper\">\n            <canvas id=\"stockChart\"></canvas>\n        </div>\n\n        <div id=\"favourites-container\">\n        </div>\n\n    </div>\n"; // top level variable to store favourites data on page load
+
+var favouritesList;
+
+var loadFavourites = function loadFavourites() {
+  $.ajax("api/favourites/all").then(function (allFavourites) {
+    var favouritesHtml = "";
+    console.log("allFavourites", allFavourites);
+    favouritesList = allFavourites;
+    allFavourites.forEach(function (fav) {
+      favouritesHtml += "<li>".concat(fav.stockName, " - ").concat(fav.stockSymbol, "</li>");
+    });
+    console.log("favouritesHtml", favouritesHtml);
+    $("#favourites-container").empty();
+    $("#favourites-container").append("<ul>".concat(favouritesHtml, "</ul>"));
+  });
+};
+
+var findFavouriteSymbol = function findFavouriteSymbol(symbol) {
+  var findSymbol = favouritesList.find(function (fav) {
+    if (fav.stockSymbol == symbol) {
+      return true;
+    }
+
+    return false;
+  });
+  console.log("find symbol", findSymbol);
+  return findSymbol;
+};
+
+var favouriteButton = function favouriteButton(symbol) {
+  var favourite = findFavouriteSymbol(symbol);
+
+  if (!symbol) {
+    return "<button type=\"button\" class=\"btn-primary\" id=\"save-favourite\">'Favourite'</button>";
+  }
+
+  if (favourite) {
+    return "<button type=\"button\" class=\"btn-primary\" id=\"save-favourite\">Unfavourite</button>";
+  } else {
+    return "<button type=\"button\" class=\"btn-primary\" id=\"save-favourite\">'Favourite'</button>";
+  }
+};
 
 var stockSearch = function stockSearch() {
-  // Use name to find and extract symbol from search input
-  var onSearchSubmit = function onSearchSubmit(event) {
-    event.preventDefault(); // console.log('event', event);
-
-    var $stockSearch = $('input[name="stock"]');
-    console.log("stockSearch", $stockSearch);
-    var stockName = $stockSearch.val();
-    console.log(stockName);
-    return findStockData(stockName);
-  };
+  loadFavourites();
 
   var findStockData = function findStockData(stockNameParam) {
     var pendingStockData = $.ajax("api/stocks/search/".concat(stockNameParam)).then(function (stockData) {
@@ -22786,10 +22813,11 @@ var stockSearch = function stockSearch() {
       var stockSymbol = stockData.stockSymbol;
       var stockName = stockData.stockName;
       var userId = stockData.userId; // Checking if the stock is already favourited
+      //  const isAlreadyFavourited = favouritesList.includes(stockSymbol);
+      // create favourite button
+      //  const favouriteButton =  `<button type="button" class="btn-primary" id="save-favourite">${isAlreadyFavourited ? 'Unfavourite' : 'Favourite'}</button>`
+      //  const favouriteButton =  `<button type="button" class="btn-primary" id="save-favourite">'Favourite'</button>`
 
-      var isAlreadyFavourited = favouritesList.includes(stockSymbol); // create favourite button
-
-      var favouriteButton = "<button type=\"button\" class=\"btn-primary\" id=\"save-favourite\">".concat(isAlreadyFavourited ? 'Unfavourite' : 'Favourite', "</button>");
       $(document).on("click", "#save-favourite", /*#__PURE__*/function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
           var favouriteDataRequest, favouriteDataResponse;
@@ -22804,11 +22832,7 @@ var stockSearch = function stockSearch() {
                     stockName: stockName,
                     userId: userId
                   };
-                  console.log("favouriteDataRequest", favouriteDataRequest);
-
-                  if (isAlreadyFavourited) {} else {}
-
-                  _context.next = 7;
+                  _context.next = 5;
                   return $.ajax({
                     type: "POST",
                     url: "/api/favourites/new-favourite",
@@ -22816,11 +22840,19 @@ var stockSearch = function stockSearch() {
                     data: JSON.stringify(favouriteDataRequest)
                   });
 
-                case 7:
+                case 5:
                   favouriteDataResponse = _context.sent;
+                  console.log(("Favourite Data Response:", favouriteDataResponse));
+
+                  if (favouriteDataResponse === "Favourite deleted!") {
+                    $("#symbol-and-name").empty();
+                    $("#symbol-and-name").append("".concat(stockSymbol, " | ").concat(stockName, " ").concat(favouriteButton(), "}"));
+                  }
+
+                  loadFavourites();
                   window.alert("Favourite added!");
 
-                case 9:
+                case 10:
                 case "end":
                   return _context.stop();
               }
@@ -22831,14 +22863,9 @@ var stockSearch = function stockSearch() {
         return function (_x) {
           return _ref.apply(this, arguments);
         };
-      }()); // $.ajax(`api/stocks/check/${stockSymbol}`)
-      // .then(isFavourite => {
-      //   if (isFavourite) {$("body").append("this works")} 
-      //   // add in logic for adding favourites button
-      // });  
-      // extract dates from api and create variables that can be used to chart
+      }()); // extract dates from api and create variables that can be used to chart
 
-      var dateData = Object.keys(stockData.stockPrice['Time Series (Daily)']);
+      var dateData = Object.keys(stockData.stockPrice["Time Series (Daily)"]);
       var dateDataToday = dateData[0];
       var dateDataTodayMinus1 = dateData[1];
       var dateDataTodayMinus2 = dateData[2];
@@ -22846,31 +22873,32 @@ var stockSearch = function stockSearch() {
       var dateDataTodayMinus4 = dateData[4];
       console.log("dateData", dateData); // turn object into array so that prices can be accessed from returned api results
 
-      var timeSeriesValues = Object.values(stockData.stockPrice['Time Series (Daily)']);
+      var timeSeriesValues = Object.values(stockData.stockPrice["Time Series (Daily)"]);
       console.log(timeSeriesValues); // extract prices and and create variables that can be used to chart
 
-      var lastClose = timeSeriesValues[0]['4. close'];
-      var lastCloseMinus1 = timeSeriesValues[1]['4. close'];
-      var lastCloseMinus2 = timeSeriesValues[2]['4. close'];
-      var lastCloseMinus3 = timeSeriesValues[3]['4. close'];
-      var lastCloseMinus4 = timeSeriesValues[4]['4. close'];
+      var lastClose = timeSeriesValues[0]["4. close"];
+      var lastCloseMinus1 = timeSeriesValues[1]["4. close"];
+      var lastCloseMinus2 = timeSeriesValues[2]["4. close"];
+      var lastCloseMinus3 = timeSeriesValues[3]["4. close"];
+      var lastCloseMinus4 = timeSeriesValues[4]["4. close"];
       console.log(lastClose);
       console.log(lastCloseMinus4); // append stock info and favourite button to body on search
 
-      $("#symbol-and-name").empty();
-      $("#symbol-and-name").append("".concat(stockSymbol, " | ").concat(stockName, " ").concat(favouriteButton));
+      $("#symbol-and-name").empty(); // $("#symbol-and-name").append(`${stockSymbol} | ${stockName}`);
+
+      $("#symbol-and-name").append("".concat(stockSymbol, " | ").concat(stockName, " ").concat(favouriteButton(stockSymbol), "}"));
       $("#price").empty();
       $("#price").append("".concat(lastClose)); // create chart
 
-      var ctx = document.getElementById('stockChart');
+      var ctx = document.getElementById("stockChart");
       var closePriceList = [lastCloseMinus4, lastCloseMinus3, lastCloseMinus2, lastCloseMinus1, lastClose];
       var dates = [dateDataTodayMinus4, dateDataTodayMinus3, dateDataTodayMinus2, dateDataTodayMinus1, dateDataToday];
       var stockChart = new Chart(ctx, {
-        type: 'line',
+        type: "line",
         data: {
           labels: dates,
           datasets: [{
-            label: 'Close Price',
+            label: "Close Price",
             data: closePriceList,
             backgroundColor: "#e6e9fe",
             borderColor: "#f6f7fe",
@@ -22883,18 +22911,29 @@ var stockSearch = function stockSearch() {
         }
       });
     });
-  };
+  }; // console.log("find stock data", findStockData);
+  // Use name to find and extract symbol from search input
 
-  console.log("find stock data", findStockData); // $("#search-submit").on("click", onSearchSubmit);
-  // $("#stock-form").on("submit", function (e) 
+
+  var onSearchSubmit = function onSearchSubmit() {
+    console.log("on search submit", onSearchSubmit); // console.log('event', event);
+
+    var $stockSearch = $('input[name="stock"]');
+    console.log("stockSearch", $stockSearch);
+    var stockName = $stockSearch.val();
+    console.log(stockName);
+    findStockData(stockName);
+  }; // $("#search-submit").on("click", onSearchSubmit);
+  // $("#stock-form").on("submit", function (e)
   // {e.preventDefault();
   //   console.log("submit test")});
 
-  $(document).on("click", "#search-submit", function (e) {
+
+  $(document).on("submit", "#stock-form", function (e) {
     e.preventDefault();
     onSearchSubmit(e);
     console.log("Stock button clicked!");
-  }); // $(document).on("click", "#save-favourite", async (e) => { 
+  }); // $(document).on("click", "#save-favourite", async (e) => {
   //   e.preventDefault();
   //   console.log("Fav button clicked!");
   //   const favouriteDataRequest = {
@@ -22922,7 +22961,10 @@ var _default = stockSearch; // Step 1:
 //   store all favourites for user
 // }
 // Step 2: find unfavourited
-// 
+// console.log("favouriteDataRequest", favouriteDataRequest);
+// if (isAlreadyFavourited)
+// {}
+// else {
 
 exports.default = _default;
 },{"../../server/src/models/UserModel":"../server/src/models/UserModel.js"}],"src/user/loginUser.js":[function(require,module,exports) {
@@ -23046,7 +23088,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50596" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51664" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
