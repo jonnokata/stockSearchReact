@@ -1034,12 +1034,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var searchForm = "\n    <div class=\"container-fluid\">\n        <div class=\"logo-container\">\n            <a href=\"https://imgur.com/gEQ7SUO\"><img src=\"https://i.imgur.com/gEQ7SUO.png\" title=\"source: imgur.com\" /></a>        \n        </div>\n\n        <form class=\"form-container\" id=\"stock-form\">\n            <div class=\"form-inline\">\n                <label for=\"inlineFormInputGroupStockName\"></label>\n                <input type=\"text\" class=\"form-input\" id=\"inlineFormInputGroupStockName\" name=\"stock\" placeholder=\"&#128269 Search for stock\"></input>\n                <!-- <input type=\"submit\" class=\"btn-primary\" id=\"stock-search-submit\" value=\"Search\" data-bs-toggle=\"button\" autocomplete=\"off\"></input> -->\n                <button  type=\"submit\" id=\"search-submit\"  class=\"btn btn-primary\">Search</button>\n                <button type=\"button\" id=\"update-user\" class=\"btn btn-primary\">Update profile</button>\n            </div>\n        </form>\n\n        <div class=\"company-and-price-container\">\n            <div id=\"symbol-and-name\"></div>\n            <div id=\"test-div\"></div>\n            <p id=\"price\"></p>\n        </div>\n\n        <div class=\"chart-wrapper\">\n            <canvas id=\"stockChart\"></canvas>\n        </div>\n\n        <div id=\"favourites-container\">\n        </div>\n\n    </div>\n"; // top level variable to store favourites data on page load
+var searchForm = "\n    <div class=\"container-fluid\">\n        <div class=\"logo-container\">\n            <a href=\"https://imgur.com/gEQ7SUO\"><img src=\"https://i.imgur.com/gEQ7SUO.png\" title=\"source: imgur.com\" /></a>        \n        </div>\n\n        <form class=\"form-container\" id=\"stock-form\">\n            <div class=\"form-inline\">\n                <label for=\"inlineFormInputGroupStockName\"></label>\n                <input type=\"text\" class=\"form-input\" id=\"inlineFormInputGroupStockName\" name=\"stock\" placeholder=\"&#128269 Search for stock\"></input>\n                <!-- <input type=\"submit\" class=\"btn-primary\" id=\"stock-search-submit\" value=\"Search\" data-bs-toggle=\"button\" autocomplete=\"off\"></input> -->\n                <button  type=\"submit\" id=\"search-submit\"  class=\"btn btn-primary\">Search</button>\n                <button type=\"button\" id=\"update-user\" class=\"btn btn-primary\">Update profile</button>\n            </div>\n        </form>\n\n        <div class=\"company-and-price-container\">\n            <div id=\"symbol-and-name\"></div>\n            <div id=\"test-div\"></div>\n            <p id=\"price\"></p>\n        </div>\n\n        <div class=\"chart-wrapper\">\n            <canvas id=\"stockChart\"></canvas>\n        </div>\n\n        <div id=\"favourites-container\">\n          \n        </div>\n\n    </div>\n"; // top level variable to store favourites data on page load
 
 var favouritesList;
 
 var loadFavourites = function loadFavourites() {
-  $.ajax("api/favourites/all").then(function (allFavourites) {
+  return $.ajax("api/favourites/all").then(function (allFavourites) {
     var favouritesHtml = "";
     console.log("allFavourites", allFavourites);
     favouritesList = allFavourites;
@@ -1048,7 +1048,7 @@ var loadFavourites = function loadFavourites() {
     });
     console.log("favouritesHtml", favouritesHtml);
     $("#favourites-container").empty();
-    $("#favourites-container").append("<ul>".concat(favouritesHtml, "</ul>"));
+    $("#favourites-container").append("\n    <h2>Favourites</h2>\n    <br></br>\n    <ul>".concat(favouritesHtml, "</ul>"));
   });
 };
 
@@ -1082,12 +1082,7 @@ var stockSearch = function stockSearch() {
       console.log("stockData", stockData);
       var stockSymbol = stockData.stockSymbol;
       var stockName = stockData.stockName;
-      var userId = stockData.userId; // Checking if the stock is already favourited
-      //  const isAlreadyFavourited = favouritesList.includes(stockSymbol);
-      // create favourite button
-      //  const favouriteButton =  `<button type="button" class="btn-primary" id="save-favourite">${isAlreadyFavourited ? 'Unfavourite' : 'Favourite'}</button>`
-      //  const favouriteButton =  `<button type="button" class="btn-primary" id="save-favourite">'Favourite'</button>`
-
+      var userId = stockData.userId;
       $(document).on("click", "#save-favourite", /*#__PURE__*/function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
           var favourited, favouriteDataRequest, favouriteDataResponse;
@@ -1102,7 +1097,7 @@ var stockSearch = function stockSearch() {
                     stockSymbol: stockSymbol,
                     stockName: stockName,
                     userId: userId,
-                    favourited: favourited
+                    favourited: !Boolean(favourited)
                   };
                   _context.next = 6;
                   return $.ajax({
@@ -1114,17 +1109,15 @@ var stockSearch = function stockSearch() {
 
                 case 6:
                   favouriteDataResponse = _context.sent;
-                  console.log(("Favourite Data Response:", favouriteDataResponse));
+                  _context.next = 9;
+                  return loadFavourites().catch(console.error);
 
-                  if (favouriteDataResponse === "Favourite deleted!") {
-                    $("#symbol-and-name").empty();
-                    $("#symbol-and-name").append("".concat(stockSymbol, " | ").concat(stockName, " ").concat(favouriteButton(stockSymbol)));
-                  }
+                case 9:
+                  console.log("Favourite Data Response:", favouriteDataResponse);
+                  $("#symbol-and-name").empty();
+                  $("#symbol-and-name").append("".concat(stockSymbol, " | ").concat(stockName, " ").concat(favouriteButton(stockSymbol)));
 
-                  loadFavourites();
-                  window.alert("Favourite added!");
-
-                case 11:
+                case 12:
                 case "end":
                   return _context.stop();
               }
@@ -1154,13 +1147,13 @@ var stockSearch = function stockSearch() {
       var lastCloseMinus3 = timeSeriesValues[3]["4. close"];
       var lastCloseMinus4 = timeSeriesValues[4]["4. close"];
       console.log(lastClose);
-      console.log(lastCloseMinus4); // append stock info and favourite button to body on search
+      console.log(lastCloseMinus4);
+      console.log("THE THING", stockSymbol, favouritesList, findFavouriteSymbol(stockSymbol)); // append stock info and favourite button to body on search
 
-      $("#symbol-and-name").empty(); // $("#symbol-and-name").append(`${stockSymbol} | ${stockName}`);
-
+      $("#symbol-and-name").empty();
       $("#symbol-and-name").append("".concat(stockSymbol, " | ").concat(stockName, " ").concat(favouriteButton(stockSymbol)));
       $("#price").empty();
-      $("#price").append("".concat(lastClose)); // create chart
+      $("#price").append("$".concat(lastClose)); // create chart
 
       var ctx = document.getElementById("stockChart");
       var closePriceList = [lastCloseMinus4, lastCloseMinus3, lastCloseMinus2, lastCloseMinus1, lastClose];
@@ -1342,7 +1335,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61039" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63245" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

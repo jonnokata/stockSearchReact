@@ -27,6 +27,7 @@ const searchForm = `
         </div>
 
         <div id="favourites-container">
+          
         </div>
 
     </div>
@@ -36,7 +37,7 @@ const searchForm = `
 let favouritesList;
 
 const loadFavourites = () => {
-  $.ajax(`api/favourites/all`).then((allFavourites) => {
+  return $.ajax(`api/favourites/all`).then((allFavourites) => {
     let favouritesHtml = ``;
     console.log("allFavourites", allFavourites);
     favouritesList = allFavourites;
@@ -45,7 +46,10 @@ const loadFavourites = () => {
     });
     console.log("favouritesHtml", favouritesHtml);
     $("#favourites-container").empty();
-    $("#favourites-container").append(`<ul>${favouritesHtml}</ul>`);
+    $("#favourites-container").append(`
+    <h2>Favourites</h2>
+    <br></br>
+    <ul>${favouritesHtml}</ul>`);
   });
 };
 
@@ -80,13 +84,6 @@ const stockSearch = () => {
         const stockName = stockData.stockName;
         const userId = stockData.userId;
 
-        // Checking if the stock is already favourited
-        //  const isAlreadyFavourited = favouritesList.includes(stockSymbol);
-
-        // create favourite button
-        //  const favouriteButton =  `<button type="button" class="btn-primary" id="save-favourite">${isAlreadyFavourited ? 'Unfavourite' : 'Favourite'}</button>`
-        //  const favouriteButton =  `<button type="button" class="btn-primary" id="save-favourite">'Favourite'</button>`
-
         $(document).on("click", "#save-favourite", async (e) => {
           e.preventDefault();
           console.log("Fav button clicked!");
@@ -97,7 +94,7 @@ const stockSearch = () => {
             stockSymbol: stockSymbol,
             stockName: stockName,
             userId: userId,
-            favourited,
+            favourited: !Boolean(favourited),
           };
 
           const favouriteDataResponse = await $.ajax({
@@ -106,16 +103,14 @@ const stockSearch = () => {
             contentType: "application/json",
             data: JSON.stringify(favouriteDataRequest),
           });
-          console.log(("Favourite Data Response:", favouriteDataResponse));
-          if (favouriteDataResponse === "Favourite deleted!") {
-            $("#symbol-and-name").empty();
-            $("#symbol-and-name").append(
-              `${stockSymbol} | ${stockName} ${favouriteButton(stockSymbol)}`
-            );
-          }
-          loadFavourites();
+          await loadFavourites().catch(console.error);
 
-          window.alert("Favourite added!");
+          console.log("Favourite Data Response:", favouriteDataResponse);
+
+          $("#symbol-and-name").empty();
+          $("#symbol-and-name").append(
+            `${stockSymbol} | ${stockName} ${favouriteButton(stockSymbol)}`
+          );
         });
 
         // extract dates from api and create variables that can be used to chart
@@ -145,12 +140,11 @@ const stockSearch = () => {
 
         // append stock info and favourite button to body on search
         $("#symbol-and-name").empty();
-        // $("#symbol-and-name").append(`${stockSymbol} | ${stockName}`);
         $("#symbol-and-name").append(
           `${stockSymbol} | ${stockName} ${favouriteButton(stockSymbol)}`
         );
         $("#price").empty();
-        $("#price").append(`${lastClose}`);
+        $("#price").append(`$${lastClose}`);
 
         // create chart
 

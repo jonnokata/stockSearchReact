@@ -28,9 +28,9 @@ router.post("/new-favourite", (request, response) => {
   }).then((favourite) => {
     console.log("favourite", favourite);
     if (favourite) {
-      FavouritesModel.findByIdAndUpdate(favourite._id, {
-        ...favourite,
-        favourited: favouriteDataRequest.favourited,
+      FavouritesModel.findByIdAndUpdate(favourite._id, favouriteDataRequest, {
+        new: true,
+        upsert: true,
       }).then(() => {
         response.send({ message: "favourite updated" });
       });
@@ -47,9 +47,11 @@ router.post("/new-favourite", (request, response) => {
 
 // Find all favourites for a specific users
 router.get("/all", (req, res) => {
-  FavouritesModel.find({ userId: req.session.user.id }).then((data) => {
-    res.send(data);
-  });
+  FavouritesModel.find({ userId: req.session.user.id, favourited: true }).then(
+    (data) => {
+      res.send(data);
+    }
+  );
 });
 
 // --------------------------------------------------

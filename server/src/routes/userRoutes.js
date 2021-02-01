@@ -33,9 +33,11 @@ router.post("/register", (request, response) => {
 
   UserModel.create(user)
     .then((userData) => {
+      console.log("userData: ", userData);
       response.send(userData);
     })
     .catch((error) => {
+      console.log("error: ", error);
       response.send(error);
     });
 });
@@ -86,7 +88,7 @@ router.patch("/update-user", (request, response) => {
     upsert: true,
   })
     .then((data) => {
-      console.log("Update successful!");
+      console.log("Update successful!", data);
       response.send(data);
     })
     .catch(() => {

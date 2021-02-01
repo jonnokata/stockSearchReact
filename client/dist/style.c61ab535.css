@@ -46,6 +46,14 @@
   background-color: #fafcff;
 }
 
+#favourites-container {
+  margin: 0 auto;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
 .btn-primary {
   display: inline-block;
   text-align: center;
