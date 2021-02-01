@@ -2,19 +2,26 @@ import newUser from "./newUser";
 import stockSearch from "../stockSearch";
 
 const form = `
-  <form id="login-user">
-  <h1>Login to Stock Buddy</h1>
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" class="form-control" placeholder="Please enter username" name="username">
+<div class="container-fluid">  
+  <div class="logo-container">
+            <a href="https://imgur.com/gEQ7SUO"><img src="https://i.imgur.com/gEQ7SUO.png" title="source: imgur.com" /></a>        
+  </div>
+  <div class="form-container">
+    <form id="login-user">
+      <h1>Login</h1>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" placeholder="Please enter username" name="username">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" placeholder="Please enter password" name="password">
+      </div>
+      <button type="submit" id="login-button" class="btn btn-primary">Submit</button>
+      <button type="button" id="register-new-user" class="btn btn-primary">Register new user </button>
+    </form>
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" placeholder="Please enter password" name="password">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-  <button id="register-new-user" class="btn btn-primary">Register new user </button>
+  </div>
 `;
 
 const loginUser = () => {

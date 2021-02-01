@@ -1,9 +1,13 @@
-import newUser from "./newUser";
 import loginUser from "./loginUser";
 import stockSearch from "../stockSearch";
 
 const form = `
-  <form id="update-user-details">
+<div class="container-fluid">  
+  <div class="logo-container">
+            <a href="https://imgur.com/gEQ7SUO"><img src="https://i.imgur.com/gEQ7SUO.png" title="source: imgur.com" /></a>        
+  </div>
+  <div class="form-container">  
+<form id="update-user-details">
   <h1>Update your profile details</h1>
     <div class="form-group">
       <label for="username">Username</label>
@@ -15,6 +19,9 @@ const form = `
     </div>
     <button type="submit" id="update-user-info" class="btn btn-primary">Submit</button>
   </form>
+  </div>
+  </div>
+  </div>
 `;
 
 const updateUser = () => {
@@ -47,7 +54,7 @@ const updateUser = () => {
     } catch (err) {
       // If there's a problem updating the details in, then add a message to let user know that an invalid combination was provided
       $("body").append("<div>Invalid user/pass provided!</div>");
-      console.log("this didn't worked");
+      console.log("this didn't work");
     }
   });
   return form;

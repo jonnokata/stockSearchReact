@@ -884,7 +884,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var form = "\n  <form id=\"new-user\">\n  <h1>New user registration form</h1>\n    <div class=\"form-group\">\n      <label for=\"username\">Username</label>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Please enter username\" name=\"username\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" placeholder=\"Please enter password\" name=\"password\">\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n  </form>\n";
+var form = "\n<div class=\"container-fluid\">  \n  <div class=\"logo-container\">\n            <a href=\"https://imgur.com/gEQ7SUO\"><img src=\"https://i.imgur.com/gEQ7SUO.png\" title=\"source: imgur.com\" /></a>        \n  </div>\n  <div class=\"form-container\">  \n  <form id=\"new-user\">\n  <h1>Sign up</h1>\n    <div class=\"form-group\">\n      <label for=\"username\">Username</label>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Please enter username\" name=\"username\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" placeholder=\"Please enter password\" name=\"password\">\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n  </form>\n  </div>\n  </div>\n  </div>\n";
 
 var newUser = function newUser() {
   $(document).on("submit", "#new-user", /*#__PURE__*/function () {
@@ -22754,8 +22754,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _newUser = _interopRequireDefault(require("./newUser"));
-
 var _loginUser = _interopRequireDefault(require("./loginUser"));
 
 var _stockSearch = _interopRequireDefault(require("../stockSearch"));
@@ -22766,7 +22764,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var form = "\n  <form id=\"update-user-details\">\n  <h1>Update your profile details</h1>\n    <div class=\"form-group\">\n      <label for=\"username\">Username</label>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Please enter your new username\" name=\"username\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" placeholder=\"Please enter your new assword\" name=\"password\">\n    </div>\n    <button type=\"submit\" id=\"update-user-info\" class=\"btn btn-primary\">Submit</button>\n  </form>\n";
+var form = "\n<div class=\"container-fluid\">  \n  <div class=\"logo-container\">\n            <a href=\"https://imgur.com/gEQ7SUO\"><img src=\"https://i.imgur.com/gEQ7SUO.png\" title=\"source: imgur.com\" /></a>        \n  </div>\n  <div class=\"form-container\">  \n<form id=\"update-user-details\">\n  <h1>Update your profile details</h1>\n    <div class=\"form-group\">\n      <label for=\"username\">Username</label>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Please enter your new username\" name=\"username\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" placeholder=\"Please enter your new assword\" name=\"password\">\n    </div>\n    <button type=\"submit\" id=\"update-user-info\" class=\"btn btn-primary\">Submit</button>\n  </form>\n  </div>\n  </div>\n  </div>\n";
 
 var updateUser = function updateUser() {
   $(document).on("submit", "#update-user-details", /*#__PURE__*/function () {
@@ -22808,7 +22806,7 @@ var updateUser = function updateUser() {
               _context.t0 = _context["catch"](2);
               // If there's a problem updating the details in, then add a message to let user know that an invalid combination was provided
               $("body").append("<div>Invalid user/pass provided!</div>");
-              console.log("this didn't worked");
+              console.log("this didn't work");
 
             case 16:
             case "end":
@@ -22827,7 +22825,7 @@ var updateUser = function updateUser() {
 
 var _default = updateUser;
 exports.default = _default;
-},{"./newUser":"src/user/newUser.js","./loginUser":"src/user/loginUser.js","../stockSearch":"src/stockSearch.js"}],"src/stockSearch.js":[function(require,module,exports) {
+},{"./loginUser":"src/user/loginUser.js","../stockSearch":"src/stockSearch.js"}],"src/stockSearch.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -23052,7 +23050,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var form = "\n  <form id=\"login-user\">\n  <h1>Login to Stock Buddy</h1>\n    <div class=\"form-group\">\n      <label for=\"username\">Username</label>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Please enter username\" name=\"username\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" placeholder=\"Please enter password\" name=\"password\">\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n  </form>\n  <button id=\"register-new-user\" class=\"btn btn-primary\">Register new user </button>\n";
+var form = "\n<div class=\"container-fluid\">  \n  <div class=\"logo-container\">\n            <a href=\"https://imgur.com/gEQ7SUO\"><img src=\"https://i.imgur.com/gEQ7SUO.png\" title=\"source: imgur.com\" /></a>        \n  </div>\n  <div class=\"form-container\">\n    <form id=\"login-user\">\n      <h1>Login</h1>\n      <div class=\"form-group\">\n        <label for=\"username\">Username</label>\n        <input type=\"text\" class=\"form-control\" placeholder=\"Please enter username\" name=\"username\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"password\">Password</label>\n        <input type=\"password\" class=\"form-control\" placeholder=\"Please enter password\" name=\"password\">\n      </div>\n      <button type=\"submit\" id=\"login-button\" class=\"btn btn-primary\">Submit</button>\n      <button type=\"button\" id=\"register-new-user\" class=\"btn btn-primary\">Register new user </button>\n    </form>\n    </div>\n  </div>\n";
 
 var loginUser = function loginUser() {
   $(document).on("submit", "#login-user", /*#__PURE__*/function () {
@@ -23155,7 +23153,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62096" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55408" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

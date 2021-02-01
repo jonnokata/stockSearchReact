@@ -1,8 +1,13 @@
 import loginUser from "./loginUser";
 
 const form = `
+<div class="container-fluid">  
+  <div class="logo-container">
+            <a href="https://imgur.com/gEQ7SUO"><img src="https://i.imgur.com/gEQ7SUO.png" title="source: imgur.com" /></a>        
+  </div>
+  <div class="form-container">  
   <form id="new-user">
-  <h1>New user registration form</h1>
+  <h1>Sign up</h1>
     <div class="form-group">
       <label for="username">Username</label>
       <input type="text" class="form-control" placeholder="Please enter username" name="username">
@@ -13,6 +18,9 @@ const form = `
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+  </div>
+  </div>
+  </div>
 `;
 
 const newUser = () => {
