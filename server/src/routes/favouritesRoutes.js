@@ -22,21 +22,25 @@ router.post("/new-favourite", (request, response) => {
   const favouriteDataRequest = request.body;
   console.log("favouriteDataRequest", favouriteDataRequest);
 
-  FavouritesModel.find({ stockSymbol: request.body.stockSymbol }).then(
-    (favourite) => {
-      console.log("favourite", favourite);
-      if (favourite) {
-        FavouritesModel.findOneAndDelete(favourite._id).then(() => {
-          response.send("Favourite deleted!");
-        });
-      } else {
-        FavouritesModel.create(favouriteDataRequest).then((data) => {
-          console.log(data);
-          response.send(data);
-        });
-      }
+  FavouritesModel.findOne({
+    stockSymbol: request.body.stockSymbol,
+    userId: request.session.user.id,
+  }).then((favourite) => {
+    console.log("favourite", favourite);
+    if (favourite) {
+      FavouritesModel.findByIdAndUpdate(favourite._id, {
+        ...favourite,
+        favourited: favouriteDataRequest.favourited,
+      }).then(() => {
+        response.send({ message: "favourite updated" });
+      });
+    } else {
+      FavouritesModel.create(favouriteDataRequest).then((data) => {
+        console.log(data);
+        response.send(data);
+      });
     }
-  );
+  });
 });
 
 // --------------------------------------------------------

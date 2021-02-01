@@ -1,4 +1,3 @@
-import { eventNames } from "../../server/src/models/UserModel";
 import updateUser from "./user/updateUser";
 
 const searchForm = `
@@ -52,10 +51,7 @@ const loadFavourites = () => {
 
 const findFavouriteSymbol = (symbol) => {
   const findSymbol = favouritesList.find((fav) => {
-    if (fav.stockSymbol == symbol) {
-      return true;
-    }
-    return false;
+    return fav.stockSymbol === symbol;
   });
   console.log("find symbol", findSymbol);
   return findSymbol;
@@ -95,10 +91,13 @@ const stockSearch = () => {
           e.preventDefault();
           console.log("Fav button clicked!");
 
+          const favourited = findFavouriteSymbol(stockSymbol);
+
           const favouriteDataRequest = {
             stockSymbol: stockSymbol,
             stockName: stockName,
             userId: userId,
+            favourited,
           };
 
           const favouriteDataResponse = await $.ajax({
@@ -111,7 +110,7 @@ const stockSearch = () => {
           if (favouriteDataResponse === "Favourite deleted!") {
             $("#symbol-and-name").empty();
             $("#symbol-and-name").append(
-              `${stockSymbol} | ${stockName} ${favouriteButton}`
+              `${stockSymbol} | ${stockName} ${favouriteButton(stockSymbol)}`
             );
           }
           loadFavourites();
