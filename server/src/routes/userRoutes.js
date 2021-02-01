@@ -72,7 +72,16 @@ router.get("/logout", (request, response) => {
 
 // Update user info
 router.patch("/update-user", (request, response) => {
-  UserModel.findByIdAndUpdate(request.session.user.id, request.body, {
+  const body = request.body;
+  const passwordHash = bcrypt.hashSync(body.password, 10);
+  console.log("passwordHash:", passwordHash);
+
+  const fields = {
+    username: body.username,
+    password: passwordHash,
+  };
+
+  UserModel.findByIdAndUpdate(request.session.user.id, fields, {
     new: true,
     upsert: true,
   })
