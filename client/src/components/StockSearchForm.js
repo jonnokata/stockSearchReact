@@ -29,7 +29,7 @@ const StockSearchForm = (props) => {
             type="text"
             class="form-input"
             id="inlineFormInputGroupStockName"
-            name="stock"
+            name="searchParam"
             placeholder="&#128269 Search for stock"
             value={formState.searchParam}
             onChange={handleChange}

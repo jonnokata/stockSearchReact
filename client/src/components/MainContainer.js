@@ -19,20 +19,23 @@ const FunctionalStockContainer = () => {
   //const [stockChart, setStockChart ] = useState({});
   // Do I need to set the state of the favourites buttone here?
 
-  // const handleStockSearchFormSubmit = (searchParam) => {
-  //     fetch("`http://localhost:9000/api/v1/movies`", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(newMovie),
-  //     }).then((response) => {
-  //       console.log("response: ", response);
-  //     });
-  //   };
+  const handleStockSearchFormSubmit = (searchParam) => {
+    const stockSearchInput = { searchParam: searchParam };
+    fetch(`api/stocks/search/${stockSearchInput}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(stockSearchInput),
+    }).then((response) => {
+      console.log("response: ", response);
+    });
+  };
 
   //   handleFavouriteClick = (stock) => {
   //   };
+
+  // Add useEffect to render favourites list on load of page
 
   return (
     <div>
