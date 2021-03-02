@@ -22,19 +22,19 @@ const StockSearchForm = (props) => {
   // What is the purpose of "onChange" in the input field?
   return (
     <div>
-      <form onSubmit={handleSubmit} class="form-container" id="stock-form">
-        <div class="form-inline">
-          <label for="inlineFormInputGroupStockName"></label>
+      <form onSubmit={handleSubmit} className="form-container" id="stock-form">
+        <div className="form-inline">
+          <label htmlFor="inlineFormInputGroupStockName"></label>
           <input
             type="text"
-            class="form-input"
+            className="form-input"
             id="inlineFormInputGroupStockName"
             name="searchParam"
-            placeholder="&#128269 Search for stock"
+            placeholder="Search for stock"
             value={formState.searchParam}
             onChange={handleChange}
           ></input>
-          <button type="submit" id="search-submit" class="btn btn-primary">
+          <button type="submit" id="search-submit" className="btn btn-primary">
             Search
           </button>
         </div>

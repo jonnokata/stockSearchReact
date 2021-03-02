@@ -1,35 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";
 // import { FavouritesList } from "./FavouritesList";
-import { SearchForm, StockSearchForm } from "./StockSearchForm";
+import { StockSearchForm } from "./StockSearchForm";
 // import { StockChart } from "./StockChart";
-// import { StockResults } from "./StockSearchResults";
+import { StockSearchResults } from "./StockSearchResults";
 
 const FunctionalStockContainer = () => {
   // Initialize state variables
   //const [favouritesList, setFavouritesList] = useState([]);
-  const [stockSearch, setStockSearch] = useState({
-    searchParam: "",
-  });
-  // const [stockSearchResults, setStockSearchResults ] = useState({
-  // stockSymbol: "",
-  //stockName: "",
-  // lastClose: ""
-  // });
-  //const [stockChart, setStockChart ] = useState({});
+
+  const [stockSearchResults, setStockSearchResults] = useState(null);
+
+  const [stockChart, setStockChart] = useState(null);
   // Do I need to set the state of the favourites buttone here?
 
   const handleStockSearchFormSubmit = (searchParam) => {
-    const stockSearchInput = { searchParam: searchParam };
-    fetch(`api/stocks/search/${stockSearchInput}`, {
+    fetch(`/api/stocks/search/${searchParam}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(stockSearchInput),
-    }).then((response) => {
-      console.log("response: ", response);
-    });
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setStockSearchResults(data);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   //   handleFavouriteClick = (stock) => {
@@ -39,7 +39,7 @@ const FunctionalStockContainer = () => {
 
   return (
     <div>
-      <div class="logo-container">
+      <div className="logo-container">
         <a href="https://imgur.com/gEQ7SUO">
           <img
             src="https://i.imgur.com/gEQ7SUO.png"
@@ -48,10 +48,14 @@ const FunctionalStockContainer = () => {
         </a>
       </div>
       <div>
-        <StockSearchForm />
+        <StockSearchForm onSubmit={handleStockSearchFormSubmit} />
+        {stockSearchResults && <StockSearchResults data={stockSearchResults} />}
       </div>
     </div>
   );
 };
 
 export { FunctionalStockContainer };
+
+// {" "}
+// {JSON.stringify(stockChart)}
