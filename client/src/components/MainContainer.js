@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";
 // import { FavouritesList } from "./FavouritesList";
 import { StockSearchForm } from "./StockSearchForm";
-// import { StockChart } from "./StockChart";
+import { StockChart } from "./StockChart";
 import { StockSearchResults } from "./StockSearchResults";
 
 const FunctionalStockContainer = () => {
@@ -50,6 +50,7 @@ const FunctionalStockContainer = () => {
       <div>
         <StockSearchForm onSubmit={handleStockSearchFormSubmit} />
         {stockSearchResults && <StockSearchResults data={stockSearchResults} />}
+        {stockSearchResults && <StockChart data={stockSearchResults} />}
       </div>
     </div>
   );
