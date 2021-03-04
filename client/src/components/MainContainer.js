@@ -4,15 +4,17 @@ import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";
 import { StockSearchForm } from "./StockSearchForm";
 import { StockChart } from "./StockChart";
 import { StockSearchResults } from "./StockSearchResults";
+import { FavouritesList } from "./FavouritesList";
+import { FavouritesButton } from "./FavouritesButton";
 
 const FunctionalStockContainer = () => {
   // Initialize state variables
-  //const [favouritesList, setFavouritesList] = useState([]);
 
   const [stockSearchResults, setStockSearchResults] = useState(null);
 
   const [stockChart, setStockChart] = useState(null);
-  // Do I need to set the state of the favourites buttone here?
+
+  const [favouritesList, setFavouritesList] = useState([]);
 
   const handleStockSearchFormSubmit = (searchParam) => {
     fetch(`/api/stocks/search/${searchParam}`, {
@@ -32,6 +34,27 @@ const FunctionalStockContainer = () => {
       });
   };
 
+  const handleFavouriteStockSubmit = (stockSymbol, stockName) => {
+    const newFavourite = { stockSymbol, stockName };
+
+    const newFavouritesList = [...favouritesList];
+    newFavouritesList.push(newFavouritesList);
+
+    setFavouritesList(newFavourite);
+
+    fetch(`api/favourites/new-favourite`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newFavourite),
+    }).then((response) => {
+      console.log("response: ", response);
+    });
+  };
+
+  // const handleUnfavourite =
+
   //   handleFavouriteClick = (stock) => {
   //   };
 
@@ -49,14 +72,20 @@ const FunctionalStockContainer = () => {
       </div>
       <div>
         <StockSearchForm onSubmit={handleStockSearchFormSubmit} />
+        {stockSearchResults && (
+          <FavouritesButton onClick={handleFavouriteStockSubmit} />
+        )}
         {stockSearchResults && <StockSearchResults data={stockSearchResults} />}
         {stockSearchResults && <StockChart data={stockSearchResults} />}
+        {stockSearchResults && (
+          <FavouritesList
+            data={stockSearchResults}
+            favourites={favouritesList}
+          />
+        )}
       </div>
     </div>
   );
 };
 
 export { FunctionalStockContainer };
-
-// {" "}
-// {JSON.stringify(stockChart)}
