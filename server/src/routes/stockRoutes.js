@@ -7,14 +7,14 @@ const fetch = require("node-fetch");
 // Create a new router to handle favourites routes
 const router = express.Router();
 
-router.use((request, response, next) => {
-  console.log("request user router session:", request.session);
-  if (!request.session.user) {
-    response.status(401).send("Please login");
-  } else {
-    next();
-  }
-});
+// router.use((request, response, next) => {
+//   console.log("request user router session:", request.session);
+//   if (!request.session.user) {
+//     response.status(401).send("Please login");
+//   } else {
+//     next();
+//   }
+// });
 
 // Search for stock through AlphaVantage API
 router.get("/search/:name", async (request, response) => {
@@ -39,7 +39,7 @@ router.get("/search/:name", async (request, response) => {
     stockName: stockNameConst,
     stockSymbol: stockSymbolConst,
     stockPrice: stockPriceData,
-    userId: request.session.user.id,
+    // userId: request.session.user.id,
   };
 
   response.send(stockData);

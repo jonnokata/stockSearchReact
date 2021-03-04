@@ -6,14 +6,14 @@ const fetch = require("node-fetch");
 // Create a new router to handle favourites routes
 const router = express.Router();
 
-router.use((request, response, next) => {
-  console.log("request user router session:", request.session);
-  if (!request.session.user) {
-    response.status(401).send("Please login");
-  } else {
-    next();
-  }
-});
+// router.use((request, response, next) => {
+//   console.log("request user router session:", request.session);
+//   if (!request.session.user) {
+//     response.status(401).send("Please login");
+//   } else {
+//     next();
+//   }
+// });
 
 // --------------------------------------------------------
 
@@ -24,14 +24,19 @@ router.post("/new-favourite", (request, response) => {
 
   FavouritesModel.findOne({
     stockSymbol: request.body.stockSymbol,
-    userId: request.session.user.id,
+    // userId: request.session.user.id,
   }).then((favourite) => {
     console.log("favourite", favourite);
     if (favourite) {
-      FavouritesModel.findByIdAndUpdate(favourite._id, favouriteDataRequest, {
-        new: true,
-        upsert: true,
-      }).then(() => {
+      // FavouritesModel.findByIdAndUpdate(favourite._id, favouriteDataRequest, {
+      FavouritesModel.findByIdAndUpdate(
+        favourite.stockSymbol,
+        favouriteDataRequest,
+        {
+          new: true,
+          upsert: true,
+        }
+      ).then(() => {
         response.send({ message: "favourite updated" });
       });
     } else {
@@ -46,13 +51,14 @@ router.post("/new-favourite", (request, response) => {
 // --------------------------------------------------------
 
 // Find all favourites for a specific users
-router.get("/all", (req, res) => {
-  FavouritesModel.find({ userId: req.session.user.id, favourited: true }).then(
-    (data) => {
-      res.send(data);
-    }
-  );
-});
+// router.get("/all", (req, res) => {
+//   // FavouritesModel.find({ userId: req.session.user.id, favourited: true }).then(
+//   FavouritesModel.find({ userId: req.session.user.id, favourited: true }).then(
+//     (data) => {
+//       res.send(data);
+//     }
+//   );
+// });
 
 // --------------------------------------------------
 
@@ -60,7 +66,7 @@ router.get("/all", (req, res) => {
 router.get("/check/:symbol", (req, res) => {
   FavouritesModel.findOne({
     stockSymbol: req.params.symbol,
-    userId: req.session.user.id,
+    // userId: req.session.user.id,
   }).then((data) => {
     res.send(data ? true : false);
   });
@@ -72,7 +78,7 @@ router.get("/check/:symbol", (req, res) => {
 
 router.delete("delete/:symbol", (request, response) => {
   FavouritesModel.findByIdAndDelete({
-    userId: request.session.user.id,
+    // userId: request.session.user.id,
     stockSymbol: request.params.symbol,
   })
     .then((data) => {

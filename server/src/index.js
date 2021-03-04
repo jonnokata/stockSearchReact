@@ -24,17 +24,17 @@ const port = 3000;
 
 // Import all routers
 const internalRouter = require("./routes/internalRoutes");
-const userRouter = require("./routes/userRoutes");
+// const userRouter = require("./routes/userRoutes");
 const favouritesRouter = require("./routes/favouritesRoutes");
 const stockRouter = require("./routes/stockRoutes");
 
 // Add middleware to be able to read and understand json files
 app.use(express.json());
-app.use(cors()); 
+app.use(cors());
 
 // Tell express that it needs to use the routers we have initialised
 app.use("/internal", internalRouter);
-app.use("/api/users", userRouter);
+// app.use("/api/users", userRouter);
 app.use("/api/favourites", favouritesRouter);
 app.use("/api/stocks", stockRouter);
 

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";
 import { StockSearchForm } from "./StockSearchForm";
 import { StockChart } from "./StockChart";
 import { StockSearchResults } from "./StockSearchResults";
-import { FavouritesList } from "./FavouritesList";
+// import { FavouritesList } from "./FavouritesList";
 import { FavouritesButton } from "./FavouritesButton";
 
 const FunctionalStockContainer = () => {
@@ -34,7 +34,9 @@ const FunctionalStockContainer = () => {
       });
   };
 
-  const handleFavouriteStockSubmit = (stockSymbol, stockName) => {
+  const handleFavouriteStockSubmit = () => {
+    const stockName = stockSearchResults.stockName;
+    const stockSymbol = stockSearchResults.stockSymbol;
     const newFavourite = { stockSymbol, stockName };
 
     const newFavouritesList = [...favouritesList];
@@ -73,16 +75,19 @@ const FunctionalStockContainer = () => {
       <div>
         <StockSearchForm onSubmit={handleStockSearchFormSubmit} />
         {stockSearchResults && (
-          <FavouritesButton onClick={handleFavouriteStockSubmit} />
+          <FavouritesButton
+            onClick={handleFavouriteStockSubmit}
+            data={StockSearchResults}
+          />
         )}
         {stockSearchResults && <StockSearchResults data={stockSearchResults} />}
         {stockSearchResults && <StockChart data={stockSearchResults} />}
-        {stockSearchResults && (
+        {/* {stockSearchResults && (
           <FavouritesList
             data={stockSearchResults}
             favourites={favouritesList}
           />
-        )}
+        )} */}
       </div>
     </div>
   );
