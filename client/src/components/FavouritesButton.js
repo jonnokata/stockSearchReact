@@ -22,7 +22,7 @@ const FavouritesButton = (props) => {
       >
         {/* if true = show "Favourite" and onClick add to favourite list */}
         {/* if false = show "Unfavourite" and onClick remove from favourite list */}
-        {props.isFavourite ? "Unfavourite" : "Favourite"};
+        {props.isFavourite ? "Unfavourite" : "Favourite"}
       </button>
     </div>
   );

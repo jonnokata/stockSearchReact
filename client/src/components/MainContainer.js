@@ -47,12 +47,32 @@ const FunctionalStockContainer = () => {
   };
 
   const handleFavouriteStockSubmit = () => {
+    const stockName = stockSearchResults.stockName;
+    const stockSymbol = stockSearchResults.stockSymbol;
     if (isStockFavourite) {
+      const stockToUnfavourite = { stockSymbol, stockName };
       // find stock symbol in favourites list & set favourite state with new array
+      const foundStock = favouritesList.findIndex((stockEl) => {
+        return stockEl.stockSymbol === stockSymbol;
+      });
+      console.log("found stock: ", foundStock);
+      const newFavouritesList = [...favouritesList];
+      newFavouritesList[foundStock] = stockToUnfavourite;
+
+      setFavouritesList(newFavouritesList);
+
       // do fetch call to delete
+
+      fetch(`api/favourites/delete/${stockSymbol}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(stockToUnfavourite),
+      }).then((response) => {
+        console.log("response: ", response);
+      });
     } else {
-      const stockName = stockSearchResults.stockName;
-      const stockSymbol = stockSearchResults.stockSymbol;
       const newFavourite = { stockSymbol, stockName };
 
       const newFavouritesList = [...favouritesList];
