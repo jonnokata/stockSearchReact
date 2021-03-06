@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Button, Text } from "@chakra-ui/react";
 
 const FavouritesButton = (props) => {
   // const [isFavourite, setIsFavourite] = useState(false);
@@ -14,7 +15,11 @@ const FavouritesButton = (props) => {
 
   return (
     <div>
-      <button
+      <Button
+        colorScheme="cyan"
+        color="white"
+        size="sm"
+        ml={4}
         type="submit"
         id="save-favourite"
         className="btn btn-primary"
@@ -23,7 +28,7 @@ const FavouritesButton = (props) => {
         {/* if true = show "Favourite" and onClick add to favourite list */}
         {/* if false = show "Unfavourite" and onClick remove from favourite list */}
         {props.isFavourite ? "Unfavourite" : "Favourite"}
-      </button>
+      </Button>
     </div>
   );
 };

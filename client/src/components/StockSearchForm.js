@@ -1,4 +1,13 @@
 import React, { useEffect, useState } from "react";
+import {
+  Button,
+  ButtonGroup,
+  Box,
+  Input,
+  InputGroup,
+  Text,
+  Flex,
+} from "@chakra-ui/react";
 
 const StockSearchForm = (props) => {
   const [formState, setFormState] = useState({
@@ -21,11 +30,14 @@ const StockSearchForm = (props) => {
   // What is the purpose of onSubmit in the form tags?
   // What is the purpose of "onChange" in the input field?
   return (
-    <div>
+    <Box margin="0 auto">
       <form onSubmit={handleSubmit} className="form-container" id="stock-form">
         <div className="form-inline">
           <label htmlFor="inlineFormInputGroupStockName"></label>
-          <input
+
+          <Input
+            size="sm"
+            variant="outline"
             type="text"
             className="form-input"
             id="inlineFormInputGroupStockName"
@@ -33,13 +45,22 @@ const StockSearchForm = (props) => {
             placeholder="Search for stock"
             value={formState.searchParam}
             onChange={handleChange}
-          ></input>
-          <button type="submit" id="search-submit" className="btn btn-primary">
+            bgColor="gray.100"
+          ></Input>
+          <Button
+            colorScheme="cyan"
+            color="white"
+            size="sm"
+            ml={4}
+            type="submit"
+            // id="search-submit"
+            // className="btn btn-primary"
+          >
             Search
-          </button>
+          </Button>
         </div>
       </form>
-    </div>
+    </Box>
   );
 };
 

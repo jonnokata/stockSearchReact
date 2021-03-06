@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+import { Text, Box } from "@chakra-ui/react";
 
 const StockChart = (props) => {
   let dateData = Object.keys(props.data.stockPrice["Time Series (Daily)"]);
@@ -48,17 +49,19 @@ const StockChart = (props) => {
   };
 
   return (
-    <div>
-      <Line
-        data={chartData}
-        options={{
-          legend: {
-            display: true,
-            position: "right",
-          },
-        }}
-      />
-    </div>
+    <Box w="50%" h="50%" maxWidth="720px" margin="0 auto">
+      <Text>
+        <Line
+          data={chartData}
+          options={{
+            legend: {
+              display: true,
+              position: "right",
+            },
+          }}
+        />
+      </Text>
+    </Box>
   );
 };
 

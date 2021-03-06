@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Text } from "@chakra-ui/react";
 
 const FavouritesList = (props) => {
   return (
@@ -6,7 +7,9 @@ const FavouritesList = (props) => {
       {props.favourites &&
         props.favourites.map((el, index) => (
           <li key={index}>
-            {el.stockSymbol} | {el.stockName}
+            <Text fontSize="16px">
+              {el.stockSymbol} | {el.stockName}
+            </Text>
           </li>
         ))}
     </ul>

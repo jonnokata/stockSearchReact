@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Text, Box } from "@chakra-ui/react";
 
 const StockSearchResults = (props) => {
   let dateData = Object.keys(props.data.stockPrice["Time Series (Daily)"]);
@@ -12,11 +13,15 @@ const StockSearchResults = (props) => {
   const lastClose = timeSeriesValues[0]["4. close"];
 
   return (
-    <div>
-      {props.data.stockSymbol} | {props.data.stockName}
+    <Box>
+      <Text fontSize="28px" fontWeight="600">
+        {props.data.stockSymbol} | {props.data.stockName}
+      </Text>
       <br></br>
-      {lastClose}
-    </div>
+      <Text fontSize="26px" fontWeight="200">
+        ${lastClose}
+      </Text>
+    </Box>
   );
 };
 

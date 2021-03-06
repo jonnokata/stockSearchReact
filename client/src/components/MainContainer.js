@@ -5,6 +5,7 @@ import { StockChart } from "./StockChart";
 import { StockSearchResults } from "./StockSearchResults";
 import { FavouritesList } from "./FavouritesList";
 import { FavouritesButton } from "./FavouritesButton";
+import { Box, Image, Center, Text, Flex } from "@chakra-ui/react";
 
 const FunctionalStockContainer = () => {
   // Initialize state variables
@@ -123,29 +124,38 @@ const FunctionalStockContainer = () => {
   // Add useEffect to render favourites list on load of page
 
   return (
-    <div>
-      <div className="logo-container">
+    <Box>
+      <Box w="30%" minW="150px" margin="0 auto" className="logo-container">
         <a href="https://imgur.com/gEQ7SUO">
           <img
             src="https://i.imgur.com/gEQ7SUO.png"
             title="source: imgur.com"
           />
         </a>
-      </div>
-      <div>
-        <StockSearchForm onSubmit={handleStockSearchFormSubmit} />
-        {stockSearchResults && (
-          <FavouritesButton
-            onClick={handleFavouriteStockSubmit}
-            isFavourite={isStockFavourite}
-          />
-        )}
+      </Box>
+      <Flex>
+        <Box>
+          <StockSearchForm onSubmit={handleStockSearchFormSubmit} />
+        </Box>
+        <Box>
+          {stockSearchResults && (
+            <FavouritesButton
+              onClick={handleFavouriteStockSubmit}
+              isFavourite={isStockFavourite}
+            />
+          )}
+        </Box>
+      </Flex>
+      <Box>
         {stockSearchResults && <StockSearchResults data={stockSearchResults} />}
+      </Box>
+      <Box>
         {stockSearchResults && <StockChart data={stockSearchResults} />}
-
+      </Box>
+      <Box>
         <FavouritesList data={stockSearchResults} favourites={favouritesList} />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
