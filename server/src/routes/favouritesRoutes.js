@@ -51,14 +51,13 @@ router.post("/new-favourite", (request, response) => {
 // --------------------------------------------------------
 
 // Find all favourites for a specific users
-// router.get("/all", (req, res) => {
-//   // FavouritesModel.find({ userId: req.session.user.id, favourited: true }).then(
-//   FavouritesModel.find({ userId: req.session.user.id, favourited: true }).then(
-//     (data) => {
-//       res.send(data);
-//     }
-//   );
-// });
+router.get("/all", (req, res) => {
+  //   // FavouritesModel.find({ userId: req.session.user.id, favourited: true }).then(
+  FavouritesModel.find().then((data) => {
+    console.log("check favs: ", data);
+    res.send(data);
+  });
+});
 
 // --------------------------------------------------
 

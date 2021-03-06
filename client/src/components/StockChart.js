@@ -8,12 +8,10 @@ const StockChart = (props) => {
   const dateDataTodayMinus2 = dateData[2];
   const dateDataTodayMinus3 = dateData[3];
   const dateDataTodayMinus4 = dateData[4];
-  console.log("Chart: ", dateDataToday);
 
   const timeSeriesValues = Object.values(
     props.data.stockPrice["Time Series (Daily)"]
   );
-  console.log("Chart: ", timeSeriesValues);
 
   // extract prices and and create variables that can be used to chart
   const lastClose = timeSeriesValues[0]["4. close"];
@@ -21,8 +19,6 @@ const StockChart = (props) => {
   const lastCloseMinus2 = timeSeriesValues[2]["4. close"];
   const lastCloseMinus3 = timeSeriesValues[3]["4. close"];
   const lastCloseMinus4 = timeSeriesValues[4]["4. close"];
-  console.log("Chart: ", lastClose);
-  console.log("Chart: ", lastCloseMinus4);
 
   const chartData = {
     labels: [

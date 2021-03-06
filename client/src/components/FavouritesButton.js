@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const FavouritesButton = (props) => {
-  const [isFavourite, setIsFavourite] = useState(false);
+  // const [isFavourite, setIsFavourite] = useState(false);
   // const [showFavouriteButtonValue, setShowFavouriteButtonValue] = useState(
   //   "Favourite"
   // );
@@ -22,7 +22,7 @@ const FavouritesButton = (props) => {
       >
         {/* if true = show "Favourite" and onClick add to favourite list */}
         {/* if false = show "Unfavourite" and onClick remove from favourite list */}
-        Favourite
+        {props.isFavourite ? "Unfavourite" : "Favourite"};
       </button>
     </div>
   );
