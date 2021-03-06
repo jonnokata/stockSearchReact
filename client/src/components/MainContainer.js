@@ -52,14 +52,15 @@ const FunctionalStockContainer = () => {
     if (isStockFavourite) {
       const stockToUnfavourite = { stockSymbol, stockName };
       // find stock symbol in favourites list & set favourite state with new array
-      const foundStock = favouritesList.findIndex((stockEl) => {
-        return stockEl.stockSymbol === stockSymbol;
+      const newFavouritesList = favouritesList.filter((stockEl) => {
+        return stockEl.stockSymbol !== stockSymbol;
       });
-      console.log("found stock: ", foundStock);
-      const newFavouritesList = [...favouritesList];
-      newFavouritesList[foundStock] = stockToUnfavourite;
+      // console.log("found stock: ", foundStock);
+      // const newFavouritesList = [...favouritesList];
+      // newFavouritesList[foundStock] = stockToUnfavourite;
 
       setFavouritesList(newFavouritesList);
+      setIsStockFavourite(false);
 
       // do fetch call to delete
 
@@ -79,6 +80,7 @@ const FunctionalStockContainer = () => {
       newFavouritesList.push(newFavourite);
 
       setFavouritesList(newFavouritesList);
+      setIsStockFavourite(true);
 
       fetch(`api/favourites/new-favourite`, {
         method: "POST",

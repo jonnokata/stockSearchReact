@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 const FavouritesList = (props) => {
-  console.log("ash check", props.favourites);
   return (
     <ul>
       {props.favourites &&
