@@ -56,7 +56,7 @@ const StockChart = (props) => {
           options={{
             legend: {
               display: true,
-              position: "right",
+              position: "bottom",
             },
           }}
         />

@@ -7,6 +7,7 @@ import {
   InputGroup,
   Text,
   Flex,
+  Center,
 } from "@chakra-ui/react";
 
 const StockSearchForm = (props) => {
@@ -30,12 +31,13 @@ const StockSearchForm = (props) => {
   // What is the purpose of onSubmit in the form tags?
   // What is the purpose of "onChange" in the input field?
   return (
-    <Box margin="0 auto">
-      <form onSubmit={handleSubmit} className="form-container" id="stock-form">
-        <div className="form-inline">
+    <Box margin="0 auto" w="30%">
+      <Center>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="inlineFormInputGroupStockName"></label>
 
           <Input
+            margin="auto"
             size="sm"
             variant="outline"
             type="text"
@@ -46,6 +48,7 @@ const StockSearchForm = (props) => {
             value={formState.searchParam}
             onChange={handleChange}
             bgColor="gray.100"
+            w=""
           ></Input>
           <Button
             colorScheme="cyan"
@@ -58,8 +61,8 @@ const StockSearchForm = (props) => {
           >
             Search
           </Button>
-        </div>
-      </form>
+        </form>
+      </Center>
     </Box>
   );
 };

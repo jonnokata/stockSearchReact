@@ -125,7 +125,13 @@ const FunctionalStockContainer = () => {
 
   return (
     <Box>
-      <Box w="30%" minW="150px" margin="0 auto" className="logo-container">
+      <Box
+        w="30%"
+        minW="150px"
+        margin="0 auto"
+        p="30px"
+        className="logo-container"
+      >
         <a href="https://imgur.com/gEQ7SUO">
           <img
             src="https://i.imgur.com/gEQ7SUO.png"
@@ -133,28 +139,21 @@ const FunctionalStockContainer = () => {
           />
         </a>
       </Box>
-      <Flex>
-        <Box>
-          <StockSearchForm onSubmit={handleStockSearchFormSubmit} />
-        </Box>
-        <Box>
-          {stockSearchResults && (
-            <FavouritesButton
-              onClick={handleFavouriteStockSubmit}
-              isFavourite={isStockFavourite}
-            />
-          )}
-        </Box>
-      </Flex>
-      <Box>
-        {stockSearchResults && <StockSearchResults data={stockSearchResults} />}
-      </Box>
-      <Box>
-        {stockSearchResults && <StockChart data={stockSearchResults} />}
-      </Box>
-      <Box>
-        <FavouritesList data={stockSearchResults} favourites={favouritesList} />
-      </Box>
+
+      <StockSearchForm onSubmit={handleStockSearchFormSubmit} />
+
+      {stockSearchResults && (
+        <FavouritesButton
+          onClick={handleFavouriteStockSubmit}
+          isFavourite={isStockFavourite}
+        />
+      )}
+
+      {stockSearchResults && <StockSearchResults data={stockSearchResults} />}
+
+      {stockSearchResults && <StockChart data={stockSearchResults} />}
+
+      <FavouritesList data={stockSearchResults} favourites={favouritesList} />
     </Box>
   );
 };
