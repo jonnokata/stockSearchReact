@@ -31,38 +31,43 @@ const StockSearchForm = (props) => {
   // What is the purpose of onSubmit in the form tags?
   // What is the purpose of "onChange" in the input field?
   return (
-    <Box margin="0 auto" w="30%">
-      <Center>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="inlineFormInputGroupStockName"></label>
+    <Box>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          display: "flex",
+        }}
+      >
+        <label htmlFor="inlineFormInputGroupStockName"></label>
 
-          <Input
-            margin="auto"
-            size="sm"
-            variant="outline"
-            type="text"
-            className="form-input"
-            id="inlineFormInputGroupStockName"
-            name="searchParam"
-            placeholder="Search for stock"
-            value={formState.searchParam}
-            onChange={handleChange}
-            bgColor="gray.100"
-            w=""
-          ></Input>
-          <Button
-            colorScheme="cyan"
-            color="white"
-            size="sm"
-            ml={4}
-            type="submit"
-            // id="search-submit"
-            // className="btn btn-primary"
-          >
-            Search
-          </Button>
-        </form>
-      </Center>
+        <Input
+          margin="auto"
+          size="sm"
+          variant="outline"
+          type="text"
+          className="form-input"
+          id="inlineFormInputGroupStockName"
+          name="searchParam"
+          placeholder="Search for stock"
+          value={formState.searchParam}
+          onChange={handleChange}
+          bgColor="gray.100"
+          w=""
+        ></Input>
+        <Button
+          colorScheme="cyan"
+          color="white"
+          size="sm"
+          ml={4}
+          type="submit"
+          // id="search-submit"
+          // className="btn btn-primary"
+        >
+          Search
+        </Button>
+      </form>
     </Box>
   );
 };

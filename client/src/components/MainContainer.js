@@ -139,16 +139,20 @@ const FunctionalStockContainer = () => {
           />
         </a>
       </Box>
+      <Center>
+        <Box margin="0 auto" w="30%">
+          <Box display="flex" alignItems="center" justifyContent="center">
+            <StockSearchForm onSubmit={handleStockSearchFormSubmit} />
 
-      <StockSearchForm onSubmit={handleStockSearchFormSubmit} />
-
-      {stockSearchResults && (
-        <FavouritesButton
-          onClick={handleFavouriteStockSubmit}
-          isFavourite={isStockFavourite}
-        />
-      )}
-
+            {stockSearchResults && (
+              <FavouritesButton
+                onClick={handleFavouriteStockSubmit}
+                isFavourite={isStockFavourite}
+              />
+            )}
+          </Box>
+        </Box>
+      </Center>
       {stockSearchResults && <StockSearchResults data={stockSearchResults} />}
 
       {stockSearchResults && <StockChart data={stockSearchResults} />}

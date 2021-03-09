@@ -6,7 +6,7 @@ export const App = () => {
   return (
     <ChakraProvider>
       <Router>
-        <Box w="100%" h="100%" bgGradient="linear(to-br, purple.100, white )">
+        <Box w="100vw" h="100vh" bgGradient="linear(to-br, purple.100, white )">
           <FunctionalStockContainer />
         </Box>
       </Router>
